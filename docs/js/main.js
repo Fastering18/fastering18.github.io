@@ -146,7 +146,7 @@ function countUpTo(count,selector,max)
             speed = Math.round(count / div_by),
             $display = selector,
             run_count = 1,
-            int_speed = 24;
+            int_speed = 15; //24
 
         var int = setInterval(function() {
             if(run_count < div_by){
