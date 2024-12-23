@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
-  basePath: "fastering18.github.io",
+  //basePath: "fastering18.github.io",
   distDir: 'out',
 };
 
