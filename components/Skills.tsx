@@ -50,6 +50,9 @@ const Skills = () => {
                 <p className='my-4'>C/C++</p>
             </div>
             <div className='shadow-md shadow-[#040c16] hover:scale-110 duration-500'>
+                <p className='my-4'>Golang</p>
+            </div>
+            <div className='shadow-md shadow-[#040c16] hover:scale-110 duration-500'>
                 <p className='my-4'>Python</p>
             </div>
           </div>

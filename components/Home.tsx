@@ -19,7 +19,7 @@ const Home = () => {
         <p className="text-gray-500 py-4 max-w-md">
            I have 3 years of experience in Roblox game and web development.
           Currently, I love to work on web application using technologies like
-          Next.js, Express, Flask, Postgres and Mongodb.
+          Next.js, Express, Flask, Go Fiber, Postgres, and Mongodb.
         </p>
         <div>
           <Link
