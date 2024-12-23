@@ -6,7 +6,7 @@ const nextConfig = {
   assetPrefix: "./",
   distDir: 'out',
   images: {
-    loader: "akamai",
+    unoptimized: true,
     path: "",
   },
 };
