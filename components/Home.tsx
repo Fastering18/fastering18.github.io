@@ -1,8 +1,9 @@
 import React from 'react';
 import Image from "next/image";
 import { HiArrowNarrowRight } from 'react-icons/hi';
-import me from '../public/me2.png';
+//import me from '../public/me2.png';
 import { Link } from "react-scroll"; 
+import { prefix } from "../utils/prefix";
 
 const Home = () => {
   return (
@@ -37,7 +38,7 @@ const Home = () => {
       </div>
       <div>
         <Image 
-          src={me}  
+          src={`${prefix}/me2.png`}  
           alt="my profile"
           className="mx-auto w-2/3 md:w-full p-1 "
         />

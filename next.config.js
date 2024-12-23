@@ -5,6 +5,10 @@ const nextConfig = {
   //basePath: "fastering18.github.io",
   assetPrefix: "./",
   distDir: 'out',
+  images: {
+    loader: "akamai",
+    path: "",
+  },
 };
 
 module.exports = nextConfig;
