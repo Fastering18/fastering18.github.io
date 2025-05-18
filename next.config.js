@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Only use output: 'export' for production builds
-  ...(process.env.NODE_ENV === 'production' ? { output: 'export' } : {}),
-  //basePath: '/',
-  //assetPrefix: '/',
+  output: 'export',
   images: {
     unoptimized: true,
   },
-  // Disable server-side features since we're doing static export
   reactStrictMode: true,
+  basePath: process.env.NODE_ENV === 'production' ? '/fastering18.github.io' : '',
 }
 
 module.exports = nextConfig 
