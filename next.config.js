@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/Portofolio',
-  assetPrefix: '/Portofolio/',
+  // Only use output: 'export' for production builds
+  ...(process.env.NODE_ENV === 'production' ? { output: 'export' } : {}),
+  //basePath: '/',
+  //assetPrefix: '/',
   images: {
     unoptimized: true,
   },
