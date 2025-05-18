@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
@@ -14,7 +14,7 @@ const navigation = [
 export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     // Check for dark mode preference
@@ -44,16 +44,15 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-200 ${
-      isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      isScrolled ? 'bg-gray-900/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <Link href="/" className="text-xl font-bold text-primary-600 dark:text-primary-400">
+            <Link href="/" className="text-xl font-bold text-primary-400">
               MBP
             </Link>
           </div>
-          
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               {navigation.map((item) => (
@@ -61,9 +60,9 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    router.asPath === item.href
-                      ? 'text-primary-600 dark:text-primary-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                    pathname === item.href
+                      ? 'text-primary-400'
+                      : 'text-gray-300 hover:text-primary-400'
                   }`}
                 >
                   {item.name}
@@ -71,11 +70,10 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-
           <div className="flex items-center">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none"
+              className="p-2 rounded-md text-gray-300 hover:text-primary-400 focus:outline-none"
               aria-label="Toggle dark mode"
             >
               {isDark ? (

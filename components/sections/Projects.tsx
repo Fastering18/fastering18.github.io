@@ -23,19 +23,18 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="section bg-white dark:bg-gray-900">
+    <section id="projects" className="section bg-gray-900">
       <div className="container">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="section-title text-center"
+          className="section-title text-center text-gray-100"
         >
           Projects
         </motion.h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -43,9 +42,9 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="group relative bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-200 border border-gray-700"
             >
-              <div className="relative h-48">
+              <div className="relative h-56">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -53,43 +52,38 @@ export default function Projects() {
                   className="object-cover"
                 />
               </div>
-              
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-2xl font-semibold text-gray-100 mb-2">
                   {project.title}
                 </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-gray-400 mb-4">
                   {project.description}
                 </p>
-                
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-xs font-medium"
+                      className="px-2 py-1 bg-gray-900 text-gray-300 rounded-full text-xs font-medium border border-gray-700"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                
                 <div className="flex space-x-4">
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-primary-400 transition-colors duration-200"
                     aria-label="View source code"
                   >
                     <FaGithub className="w-5 h-5" />
                   </a>
-                  
                   <a
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-primary-400 transition-colors duration-200"
                     aria-label="View live demo"
                   >
                     <FaExternalLinkAlt className="w-5 h-5" />
