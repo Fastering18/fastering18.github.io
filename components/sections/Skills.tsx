@@ -9,7 +9,7 @@ const skillCategories = [
   },
   {
     name: 'Back-end',
-    skills: ['Node.js', 'Express', 'Flask', 'Go'],
+    skills: ['Nextjs', 'Express', 'Flask', 'Fiber'],
   },
   {
     name: 'Databases',
@@ -17,7 +17,7 @@ const skillCategories = [
   },
   {
     name: 'Languages',
-    skills: ['Lua', 'C/C++', 'Python', 'TypeScript'],
+    skills: ['Javascript','Lua/U', 'C/C++', 'Python', 'Go'],
   },
   {
     name: 'Tools',

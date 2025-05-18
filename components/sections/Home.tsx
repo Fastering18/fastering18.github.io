@@ -14,7 +14,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-100 mb-6 drop-shadow-lg"
           >
-            Elevate Your Web Presence
+            Muhammad Brahmana Priambudi
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -22,7 +22,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-2xl sm:text-3xl text-gray-400 mb-10"
           >
-            Build a portfolio that stands out and inspires.
+            Builds cutting-edge software solutions.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -34,7 +34,7 @@ export default function Home() {
               href="#contact"
               className="px-8 py-3 rounded-lg bg-primary-600 hover:bg-primary-500 text-white font-semibold shadow-lg transition-colors duration-200 text-lg"
             >
-              Get Started
+              About Me
             </Link>
           </motion.div>
         </div>

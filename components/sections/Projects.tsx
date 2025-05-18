@@ -9,17 +9,17 @@ const projects = [
     title: 'GBLK Programming Language',
     description: 'A custom programming language built with Node.js, featuring a live demo and comprehensive documentation.',
     image: '/projects/gblk.jpg',
-    tags: ['Node.js', 'TypeScript', 'Compiler Design'],
-    github: 'https://github.com/yourusername/gblk',
-    demo: 'https://gblk-demo.example.com',
+    tags: ['Node.js', 'Compiler'],
+    github: 'https://github.com/Fastering18/node-gblok',
+    demo: 'https://gblk-lang.glitch.me/',
   },
   {
     title: 'Kliker Simulator',
     description: 'A mature clicking-based Roblox game simulator with advanced progression systems and multiplayer features.',
     image: '/projects/kliker.jpg',
     tags: ['Lua', 'Roblox', 'Game Development'],
-    github: 'https://github.com/yourusername/kliker',
-    demo: 'https://www.roblox.com/games/your-game-id',
+    github: '#not-open-sourced',
+    demo: 'https://www.roblox.com/games/9769554963/UPDATE-2-Kliker-Simulator',
   },
 ];
 

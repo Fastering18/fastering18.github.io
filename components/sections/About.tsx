@@ -30,9 +30,6 @@ export default function About() {
             <p className="text-gray-400">
               I specialize in modern web technologies, focusing on performance, accessibility, and beautiful design. I enjoy collaborating with others and learning new things every day.
             </p>
-            <p className="text-gray-400">
-              Outside of coding, I'm inspired by art, music, and the endless possibilities of technology.
-            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}

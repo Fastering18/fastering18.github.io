@@ -7,17 +7,17 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 const socialLinks = [
   {
     name: 'GitHub',
-    href: 'https://github.com/yourusername',
+    href: 'https://github.com/fastering18',
     icon: FaGithub,
   },
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/yourusername',
+    href: 'https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320',
     icon: FaLinkedin,
   },
   {
     name: 'Email',
-    href: 'mailto:your.email@example.com',
+    href: 'mailto:fastering18@gmail.com',
     icon: FaEnvelope,
   },
 ];
