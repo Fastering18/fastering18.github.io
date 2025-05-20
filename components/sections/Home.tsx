@@ -2,27 +2,28 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { siteConfig } from '@/config/siteConfig';
 
 export default function Home() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 via-gray-950 to-gray-900">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-100 via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-100 mb-6 drop-shadow-lg"
+            className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 dark:text-gray-100 mb-6 drop-shadow-lg"
           >
-            Muhammad Brahmana Priambudi
+            {siteConfig.personalInfo.name}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-2xl sm:text-3xl text-gray-400 mb-10"
+            className="text-2xl sm:text-3xl text-gray-600 dark:text-gray-400 mb-10"
           >
-            Builds cutting-edge software solutions.
+            {siteConfig.personalInfo.title}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -3,24 +3,13 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { siteConfig } from '@/config/siteConfig';
 
-const socialLinks = [
-  {
-    name: 'GitHub',
-    href: 'https://github.com/fastering18',
-    icon: FaGithub,
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320',
-    icon: FaLinkedin,
-  },
-  {
-    name: 'Email',
-    href: 'mailto:fastering18@gmail.com',
-    icon: FaEnvelope,
-  },
-];
+const socialIcons = {
+  github: FaGithub,
+  linkedin: FaLinkedin,
+  twitter: FaEnvelope,
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -60,7 +49,7 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
           className="section-title text-center"
         >
-          Get in Touch
+          {siteConfig.contactForm.title}
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div
@@ -74,22 +63,27 @@ export default function Contact() {
               Let's Connect
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              {siteConfig.contactForm.description}
             </p>
+            {/*
             <div className="flex space-x-6">
-              {socialLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                  aria-label={item.name}
-                >
-                  <item.icon className="w-6 h-6" />
-                </a>
-              ))}
-            </div>
+              {Object.entries(siteConfig.socialLinks).map(([platform, url]) => {
+                const Icon = socialIcons[platform as keyof typeof socialIcons];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={platform}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                    aria-label={platform}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </a>
+                );
+              })}
+            </div>*/}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}

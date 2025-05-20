@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { siteConfig } from '@/config/siteConfig';
 
 
 interface LayoutProps {
@@ -21,7 +22,7 @@ export default function Layout({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={siteConfig.assets.favicon} />
       </Head>
       
       <div className="min-h-screen flex flex-col">

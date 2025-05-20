@@ -1,21 +1,27 @@
 import Link from 'next/link';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaDiscord, FaTwitter } from 'react-icons/fa';
+import { siteConfig } from '@/config/siteConfig';
 
 const socialLinks = [
   {
     name: 'GitHub',
-    href: 'https://github.com/yourusername',
+    href: siteConfig.socialLinks.github,
     icon: FaGithub,
   },
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/yourusername',
+    href: siteConfig.socialLinks.linkedin,
     icon: FaLinkedin,
   },
   {
-    name: 'Email',
-    href: 'mailto:your.email@example.com',
-    icon: FaEnvelope,
+    name: 'Discord',
+    href: siteConfig.socialLinks.discord,
+    icon: FaDiscord,
+  },
+  {
+    name: 'Twitter',
+    href: siteConfig.socialLinks.twitter,
+    icon: FaTwitter,
   },
 ];
 
