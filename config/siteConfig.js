@@ -49,21 +49,46 @@ export const siteConfig = {
   // Projects
   projects: [
     {
-      title: "GBLK Language",
-      description: "Localized programming languages based in Indonesia for education purposes.",
-      image: "/static/images/projects/gblk.png",
-      technologies: ["Node.js", "Interpreter"],
-      githubLink: "https://github.com/Fastering18/node-gblok",
-      liveLink: "https://gblk-lang.glitch.me",
+      title: "Map Roblox Institut Teknologi Sepuluh Nopember (2025)",
+      description: "Head scripter of the game, responsible for feature development such as: animation, teleport, fishing, leaderboard, and more.",
+      image: "/static/images/projects/its_rektorat.png",
+      technologies: ["Roblox Game Development", "Luau", "Knit"],
+      githubLink: "#",
+      liveLink: "https://www.roblox.com/games/74147470413984/Institut-Teknologi-Sepuluh-Nopember-ITS-VOICE",
+    },
+     {
+      title: "(UPD) Free Fashion UGC! (2025)",
+      description: "Head scripter of the game, responsible for all gameplay logic. The game is about passing ball to other players to build up lucks, thus player can break the ball upon reaching confident percent luck to gain coins to buy Roblox avatar's accessories without robux. ",
+      image: "/static/images/projects/ugc_game.png",
+      technologies: ["Roblox Game Development", "Luau", "Knit"],
+      githubLink: "#",
+      liveLink: "https://www.roblox.com/games/105245585048818/UPD-Free-Fashion-UGC",
+    },
+     {
+      title: "Roblox FPS Game (2025)",
+      description: "Sole developer of the game. A fast-paced FPS showcase on Roblox that blends the tactical flexibility of classic PC shooters with modern, accessible gameplay. Inspired by the intensity of Point Blank (2008) and the streamlined design of Rivals, this project was developed to deliver a seamless and responsive combat experience on both PC and mobile platforms.",
+      image: "/static/images/projects/fpsgame.png",
+      technologies: ["Roblox Game Development", "Luau", "Knit"],
+      githubLink: "#",
+      liveLink: "https://www.roblox.com/games/5911186985/Gun-testing",
     },
     {
-      title: "Kliker Simulator",
+      title: "Kliker Simulator (2023)",
       description: "A real-time Roblox clicker game with robust features.",
       image: "/static/images/projects/kliker_sim.jpg",
       technologies: ["Game Development", "Luau"],
       githubLink: "#",
       liveLink: "https://www.roblox.com/games/9769554963/UPDATE-2-Kliker-Simulator",
     },
+     {
+      title: "Goblox Discord Bot (2020)",
+      description: "Sole developer of the bot. Goblox integrates Roblox and Discord, allowing users to fetch Roblox profiles, avatars, game details, and many more directly within Discord servers. This bot is used in over 300+ servers as of 2024 and later discontinued due to bot deletion by Discord because lack of updated permission.",
+      image: "/static/images/projects/gobloxbot.png",
+      technologies: ["Discord bot", "Node.js", "Discord.js"],
+      githubLink: "#",
+      liveLink: "https://top.gg/bot/717660707650273280",
+    },
+
   ],
 
   // Contact Form
