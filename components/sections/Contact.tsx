@@ -23,13 +23,27 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus('idle');
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+        const content = `**New contact message**\n**Name:** ${formData.name || '—'}\n**Email:** ${formData.email || '—'}\n**Message:**\n${formData.message || '—'}`;
+      const res = await fetch('https://discordapp.com/api/webhooks/1422638752689426565/2pCn2Q1QQ_DNyReDce77Uf1GiPGDknZwSoiby_giHuRy3zZqATh__b0J_HSft87UzO6G', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({  content}),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error('Contact API error:', text);
+        setSubmitStatus('error');
+      } else {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      }
     } catch (error) {
+      console.error('Request failed:', error);
       setSubmitStatus('error');
-      console.log(error);
     } finally {
       setIsSubmitting(false);
     }

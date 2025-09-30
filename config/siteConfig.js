@@ -66,7 +66,7 @@ export const siteConfig = {
     },
      {
       title: "Roblox FPS Game (2025)",
-      description: "Sole developer of the game. A fast-paced FPS showcase on Roblox that blends the tactical flexibility of classic PC shooters with modern, accessible gameplay. Inspired by the intensity of Point Blank (2008) and the streamlined design of Rivals, this project was developed to deliver a seamless and responsive combat experience on both PC and mobile platforms.",
+      description: "Sole developer of the game. A fast-paced FPS showcase on Roblox that inspired by the intensity of Point Blank (2008) and the streamlined design of Rivals, this project was developed to deliver responsive combat experience on both PC and mobile platforms.",
       image: "/static/images/projects/fpsgame.png",
       technologies: ["Roblox Game Development", "Luau", "Knit"],
       githubLink: "#",
@@ -74,7 +74,7 @@ export const siteConfig = {
     },
     {
       title: "Kliker Simulator (2023)",
-      description: "A real-time Roblox clicker game with robust features.",
+      description: "Sole developer of the game. A real-time Roblox clicker game with robust features. Features similar to Pet Simulator X.",
       image: "/static/images/projects/kliker_sim.jpg",
       technologies: ["Game Development", "Luau"],
       githubLink: "#",
