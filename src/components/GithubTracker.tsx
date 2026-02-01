@@ -7,23 +7,40 @@ import styles from "./GithubTracker.module.css";
 
 export default function GithubTracker() {
     const [mounted, setMounted] = useState(false);
+    const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    const years = [2025, 2024, 2023, 2022, 2021, 2020];
+
     return (
         <AnimatedSection className={styles.tracker}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h3 className={styles.title}>Contribution Graph</h3>
-                    <p className={styles.subtitle}>My open source activity on GitHub</p>
+                    <div className={styles.titleInfo}>
+                        <h3 className={styles.title}>Contribution Graph</h3>
+                        <p className={styles.subtitle}>My open source activity on GitHub</p>
+                    </div>
+                    <div className={styles.yearSelector}>
+                        {years.map(year => (
+                            <button
+                                key={year}
+                                className={`${styles.yearBtn} ${selectedYear === year ? styles.activeYear : ""}`}
+                                onClick={() => setSelectedYear(year)}
+                            >
+                                {year}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 <div className={styles.calendarWrapper}>
                     {mounted ? (
                         <GitHubCalendar
                             username="Fastering18"
+                            year={selectedYear}
                             blockSize={12}
                             blockMargin={4}
                             colorScheme="dark"

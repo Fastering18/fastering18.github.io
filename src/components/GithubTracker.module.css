@@ -12,7 +12,47 @@
 }
 
 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     margin-bottom: 24px;
+}
+
+.titleInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.yearSelector {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border-glass);
+}
+
+.yearBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-inter);
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.yearBtn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.yearBtn.activeYear {
+    background: var(--accent-purple);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 .title {
