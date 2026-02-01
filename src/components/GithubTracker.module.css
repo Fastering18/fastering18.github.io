@@ -1,0 +1,45 @@
+.tracker {
+    margin-bottom: 60px;
+}
+
+.container {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.calendarWrapper {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+/* Custom styles for the calendar if needed */
+:global(.react-github-calendar__chart) {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+}

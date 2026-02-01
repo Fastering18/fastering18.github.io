@@ -1,0 +1,49 @@
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+}
+
+.planeWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planeIcon {
+    color: var(--accent-purple);
+    filter: drop-shadow(0 0 8px var(--glow-purple));
+}
+
+.glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle,
+            var(--accent-purple) 0%,
+            var(--accent-blue) 30%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    filter: blur(60px);
+}
+
+@media (max-width: 768px) {
+
+    .cursor,
+    .glow {
+        display: none;
+    }
+}

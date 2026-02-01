@@ -1,0 +1,37 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    cursor: default;
+}
+
+.badge:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--border-glass-hover);
+}
+
+.icon {
+    color: var(--accent-purple);
+    flex-shrink: 0;
+}
+
+.iconImg {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+}

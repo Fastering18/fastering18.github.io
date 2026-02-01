@@ -1,0 +1,102 @@
+.sidebar {
+    width: 280px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-right: 1px solid var(--border-glass);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    padding: 32px;
+    font-family: var(--font-outfit);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo a {
+    background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav {
+    flex: 1;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-inter);
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.navItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.navItem.active {
+    background: var(--accent-purple);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.footer {
+    padding: 24px 16px;
+    border-top: 1px solid var(--border-glass);
+}
+
+.logoutBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: #ff4d4d;
+    font-family: var(--font-inter);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.logoutBtn:hover {
+    background: rgba(255, 77, 77, 0.1);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border-glass);
+    }
+
+    .nav {
+        flex-direction: row;
+        padding: 16px;
+        overflow-x: auto;
+    }
+
+    .navItem span {
+        display: none;
+    }
+}

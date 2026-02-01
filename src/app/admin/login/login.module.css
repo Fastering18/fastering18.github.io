@@ -1,0 +1,71 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    padding: 20px;
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+}
+
+.title {
+    font-family: var(--font-outfit);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    background: linear-gradient(to bottom right, #fff, #a0a0a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputGroup label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-family: var(--font-inter);
+}
+
+.inputGroup input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    font-family: var(--font-inter);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+    border-color: var(--accent-purple);
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,109 @@
+.contact {
+    padding: 120px 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--glow-purple) 0%, var(--glow-blue) 50%, transparent 70%);
+    filter: blur(100px);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content {
+    margin-bottom: 60px;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 700;
+    margin: 16px 0 24px;
+    line-height: 1.1;
+}
+
+.titleAccent {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.emailBtn {
+    font-size: 1.05rem;
+}
+
+.socials {
+    padding-top: 40px;
+    border-top: 1px solid var(--border-glass);
+}
+
+.socialsLabel {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.socialLink:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--accent-purple);
+    color: var(--accent-purple);
+}
+
+@media (max-width: 768px) {
+    .contact {
+        padding: 80px 16px;
+    }
+}

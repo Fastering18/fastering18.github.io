@@ -1,0 +1,71 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.title {
+    font-family: var(--font-outfit);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.statCard {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+}
+
+.statIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.statName {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-outfit);
+}
+
+.sectionTitle {
+    font-family: var(--font-outfit);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.activityCard {
+    padding: 40px;
+    text-align: center;
+}
+
+.placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+}

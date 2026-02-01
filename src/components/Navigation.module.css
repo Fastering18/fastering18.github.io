@@ -1,0 +1,111 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 16px 24px;
+    transition: all var(--transition-normal);
+}
+
+.scrolled {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logoText {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.links {
+    display: flex;
+    gap: 8px;
+}
+
+.link {
+    position: relative;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    border-radius: var(--radius-md);
+}
+
+.link:hover {
+    color: var(--text-primary);
+}
+
+.link.active {
+    color: var(--text-primary);
+}
+
+.activeIndicator {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-glass-hover);
+    border-radius: var(--radius-md);
+    z-index: -1;
+}
+
+.menuButton {
+    display: none;
+    color: var(--text-primary);
+    padding: 8px;
+}
+
+.mobileMenu {
+    display: none;
+    flex-direction: column;
+    padding: 16px;
+    overflow: hidden;
+}
+
+.mobileLink {
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    border-radius: var(--radius-md);
+}
+
+.mobileLink:hover {
+    color: var(--text-primary);
+    background: var(--bg-glass-hover);
+}
+
+@media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+
+    .menuButton {
+        display: flex;
+    }
+
+    .mobileMenu {
+        display: flex;
+    }
+}
