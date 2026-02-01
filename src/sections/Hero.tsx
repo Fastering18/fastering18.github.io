@@ -34,7 +34,7 @@ export default function Hero() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                 >
                     <span className={styles.line}>Hi, I&apos;m</span>
-                    <span className={styles.name}>Muhammad Brahmana</span>
+                    <span className={styles.name}>Muhammad Brahmana Priambudi</span>
                     <span className={styles.role}>Full Stack Developer</span>
                 </motion.h1>
 

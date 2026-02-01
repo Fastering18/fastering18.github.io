@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Muhammad Brahmana Priambudi | Full Stack Developer & Game Dev",
+    title: "Muhammad Brahmana Priambudi | Dev",
     description: "Building the next generation of digital experiences through clean code and immersive design.",
-    url: "https://fastering18.github.io",
+    url: "https://fastering.thedev.id",
     siteName: "Muhammad Brahmana Priambudi Portfolio",
     images: [
       {
@@ -106,8 +106,9 @@ export default function RootLayout({
               "jobTitle": "Full Stack Developer & Game Developer",
               "sameAs": [
                 "https://github.com/Fastering18",
-                "https://linkedin.com/in/fastering18",
-                "https://fastering18.github.io"
+                "https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320",
+                "https://discord.com/users/775363892167573535",
+                "https://x.com/FasteringDev"
               ],
               "description": "Senior Full Stack Developer specializing in high-performance web applications and game development."
             })

@@ -15,8 +15,10 @@ The site showcases various projects ranging from game development (Mojo City, Mo
 - Homepage: https://fastering.thedev.id
 - Projects: https://fastering.thedev.id/#projects
 - GitHub: https://github.com/Fastering18
-- LinkedIn: https://linkedin.com/in/fastering18
+- LinkedIn: https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320
+- Discord: https://discord.com/users/775363892167573535
+- Twitter: https://x.com/FasteringDev
 
 ## Contact
-Email: fasteringdev@gmail.com
+Email: fastering18@gmail.com
 Available for freelance projects and technical consultations.
