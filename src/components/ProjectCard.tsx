@@ -13,9 +13,8 @@ export interface Project {
     description: string;
     image: string;
     tags: string[];
-    year: string;
-    link?: string | null;
-    github?: string | null;
+    projectDate: Date | string;
+    links: any;
 }
 
 interface ProjectCardProps {
@@ -44,14 +43,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     />
                     <div className={styles.imageOverlay} />
                     <div className={styles.actions}>
-                        {project.link && (
+                        {project.links && project.links.length > 0 && (
                             <div className={styles.actionBtn}>
-                                <ExternalLink size={18} />
-                            </div>
-                        )}
-                        {project.github && (
-                            <div className={styles.actionBtn}>
-                                <Github size={18} />
+                                <ArrowUpRight size={18} />
                             </div>
                         )}
                     </div>
@@ -59,7 +53,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <span className={styles.year}>{project.year}</span>
+                        <span className={styles.year}>{new Date(project.projectDate).getFullYear()}</span>
                         <ArrowUpRight size={20} className={styles.arrow} />
                     </div>
                     <h3 className={styles.title}>{project.title}</h3>

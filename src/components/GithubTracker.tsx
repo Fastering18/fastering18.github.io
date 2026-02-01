@@ -7,13 +7,13 @@ import styles from "./GithubTracker.module.css";
 
 export default function GithubTracker() {
     const [mounted, setMounted] = useState(false);
-    const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+    const [selectedYear, setSelectedYear] = useState<number>(2026);
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    const years = [2025, 2024, 2023, 2022, 2021, 2020];
+    const years = [2026, 2025, 2024, 2023, 2022, 2021, 2020];
 
     return (
         <AnimatedSection className={styles.tracker}>

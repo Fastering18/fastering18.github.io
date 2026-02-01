@@ -20,7 +20,7 @@ export default async function Projects() {
 
                 <div className={styles.grid}>
                     {visibleProjects.map((project, index) => (
-                        <ProjectCard key={project.id} project={project} index={index} />
+                        <ProjectCard key={project.id} project={project as any} index={index} />
                     ))}
                 </div>
             </div>

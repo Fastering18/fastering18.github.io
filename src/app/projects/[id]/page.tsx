@@ -7,6 +7,26 @@ import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import AnimatedSection from "@/components/AnimatedSection";
 import styles from "./ProjectDetails.module.css";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+    params
+}: {
+    params: Promise<{ id: string }>
+}): Promise<Metadata> {
+    const { id } = await params;
+    const project = await getProjectById(parseInt(id));
+
+    if (!project) return { title: "Project Not Found" };
+
+    return {
+        title: `${project.title} | Muhammad Brahmana Priambudi`,
+        description: project.summary || project.description.substring(0, 160),
+        openGraph: {
+            images: [project.image],
+        },
+    };
+}
 
 export default async function ProjectDetails({
     params
@@ -22,7 +42,7 @@ export default async function ProjectDetails({
         notFound();
     }
 
-    const isRoblox = project.link?.includes("roblox.com");
+    const isRoblox = (project.links as any[])?.some(l => l.url.includes("roblox.com"));
 
     return (
         <main className={styles.main}>
@@ -43,7 +63,7 @@ export default async function ProjectDetails({
                                 <div className={styles.meta}>
                                     <div className={styles.year}>
                                         <Calendar size={16} />
-                                        <span>{project.year}</span>
+                                        <span>{new Date(project.projectDate).getFullYear()}</span>
                                     </div>
                                     <div className={styles.tags}>
                                         {project.tags.map(tag => (
@@ -69,22 +89,19 @@ export default async function ProjectDetails({
                                 <p className={styles.description}>{project.description}</p>
 
                                 <div className={styles.actions}>
-                                    {project.link && (
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                            <MagneticButton className={styles.primaryBtn}>
-                                                {isRoblox ? <Gamepad2 size={20} /> : <ExternalLink size={20} />}
-                                                <span>{isRoblox ? "Play on Roblox" : "Visit Project"}</span>
-                                            </MagneticButton>
-                                        </a>
-                                    )}
-                                    {project.github && (
-                                        <a href={project.github} target="_blank" rel="noopener noreferrer">
-                                            <MagneticButton className={styles.secondaryBtn}>
-                                                <Github size={20} />
-                                                <span>View Source</span>
-                                            </MagneticButton>
-                                        </a>
-                                    )}
+                                    {(project.links as any[])?.map((link, idx) => {
+                                        const isRoblox = link.url.includes("roblox.com");
+                                        const isGithub = link.url.includes("github.com") || link.type === "github";
+
+                                        return (
+                                            <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
+                                                <MagneticButton className={idx === 0 ? styles.primaryBtn : styles.secondaryBtn}>
+                                                    {isRoblox ? <Gamepad2 size={20} /> : isGithub ? <Github size={20} /> : <ExternalLink size={20} />}
+                                                    <span>{link.label}</span>
+                                                </MagneticButton>
+                                            </a>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </AnimatedSection>
@@ -102,7 +119,7 @@ export default async function ProjectDetails({
                                         </div>
                                         <div className={styles.miniInfo}>
                                             <span className={styles.miniTitle}>{p.title}</span>
-                                            <span className={styles.miniYear}>{p.year}</span>
+                                            <span className={styles.miniYear}>{new Date(p.projectDate).getFullYear()}</span>
                                         </div>
                                     </Link>
                                 ))}

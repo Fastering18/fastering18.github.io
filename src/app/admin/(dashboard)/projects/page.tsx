@@ -4,6 +4,7 @@ import MagneticButton from "@/components/MagneticButton";
 import styles from "./Projects.module.css";
 import { Plus, Eye, EyeOff, Trash2, Edit } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function AdminProjectsPage() {
     const allProjects = await getProjects();
@@ -35,12 +36,12 @@ export default async function AdminProjectsPage() {
                         <div className={styles.content}>
                             <div className={styles.info}>
                                 <h3 className={styles.projectTitle}>{project.title}</h3>
-                                <p className={styles.projectYear}>{project.year}</p>
+                                <p className={styles.projectYear}>{new Date(project.projectDate).getFullYear()}</p>
                             </div>
                             <div className={styles.actions}>
-                                <button className={styles.iconBtn} title="Edit">
+                                <Link href={`/admin/projects/${project.id}/edit`} className={styles.iconBtn} title="Edit">
                                     <Edit size={18} />
-                                </button>
+                                </Link>
                                 <form action={async () => {
                                     "use server";
                                     await toggleProjectVisibility(project.id, !project.isVisible);

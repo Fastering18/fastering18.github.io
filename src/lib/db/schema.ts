@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, boolean, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, boolean, integer, jsonb } from "drizzle-orm/pg-core";
 
 export const projects = pgTable("projects", {
     id: serial("id").primaryKey(),
@@ -6,10 +6,9 @@ export const projects = pgTable("projects", {
     summary: text("summary"),
     description: text("description").notNull(),
     image: text("image").notNull(),
-    tags: text("tags").array().notNull(), // PostgreSQL array
-    link: text("link"),
-    github: text("github"),
-    year: text("year").notNull(),
+    tags: text("tags").array().notNull(),
+    links: jsonb("links").default([]), // Configurable links: { label, url, type }
+    projectDate: timestamp("project_date").notNull(),
     isVisible: boolean("is_visible").default(true),
     order: integer("order").default(0),
     createdAt: timestamp("created_at").defaultNow(),
