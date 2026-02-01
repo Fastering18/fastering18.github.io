@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     template: "%s | Muhammad Brahmana Priambudi",
   },
   description: "Senior Full Stack Developer specializing in high-performance web applications, game mechanics, and visually stunning digital experiences. Expert in Next.js, TypeScript, and Roblox Studio.",
+  alternates: {
+    canonical: "https://fastering.thedev.id",
+  },
   keywords: [
     "Muhammad Brahmana Priambudi",
     "Fastering18",
