@@ -6,7 +6,7 @@ import Image from "next/image";
 import GlassCard from "@/components/GlassCard";
 import MagneticButton from "@/components/MagneticButton";
 import SkillEditorForm from "./SkillEditorForm";
-import styles from "../../(dashboard)/skills/Skills.module.css";
+import styles from "../../app/admin/(dashboard)/skills/Skills.module.css";
 import { toggleSkillVisibility, deleteSkill } from "@/app/actions/skills";
 
 interface Skill {
