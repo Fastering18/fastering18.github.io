@@ -23,7 +23,7 @@ export const skillCategories: SkillCategory[] = [
             { name: "TypeScript", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
             { name: "Dart", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
             { name: "Bash", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" },
-            { name: "Mojo", iconUrl: "https://www.modular.com/favicon-32x32.png" }, // Custom URL or generic
+            { name: "Mojo", iconUrl: "🔥" }, // Custom URL or generic
         ],
     },
     {

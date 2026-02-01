@@ -3,6 +3,7 @@ import { pgTable, text, serial, timestamp, boolean, integer } from "drizzle-orm/
 export const projects = pgTable("projects", {
     id: serial("id").primaryKey(),
     title: text("title").notNull(),
+    summary: text("summary"),
     description: text("description").notNull(),
     image: text("image").notNull(),
     tags: text("tags").array().notNull(), // PostgreSQL array

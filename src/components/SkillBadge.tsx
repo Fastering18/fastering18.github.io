@@ -23,7 +23,11 @@ export default function SkillBadge({ name, icon: Icon, iconUrl, index = 0 }: Ski
         >
             {Icon && <Icon size={18} className={styles.icon} />}
             {iconUrl && (
-                <img src={iconUrl} alt={name} className={styles.iconImg} loading="lazy" />
+                iconUrl.startsWith("http") ? (
+                    <img src={iconUrl} alt={name} className={styles.iconImg} loading="lazy" />
+                ) : (
+                    <span className={styles.emojiIcon}>{iconUrl}</span>
+                )
             )}
             <span className={styles.name}>{name}</span>
         </motion.div>

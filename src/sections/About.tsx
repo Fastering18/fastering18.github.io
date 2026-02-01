@@ -1,16 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import styles from "./About.module.css";
 
 export default function About() {
+    const [clickCount, setClickCount] = useState(0);
+    const router = useRouter();
+
+    const handlePhotoClick = () => {
+        const nextCount = clickCount + 1;
+        if (nextCount >= 5) {
+            router.push("/admin/login");
+        } else {
+            setClickCount(nextCount);
+        }
+    };
+
     return (
         <section id="about" className={styles.about}>
             <div className={styles.container}>
                 <AnimatedSection>
-                    <div className={styles.imageWrapper}>
+                    <div
+                        className={styles.imageWrapper}
+                        onClick={handlePhotoClick}
+                        style={{ cursor: "pointer" }}
+                    >
                         <div className={styles.imageGlow} />
                         <div className={styles.imageFrame}>
                             <Image

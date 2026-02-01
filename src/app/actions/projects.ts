@@ -9,6 +9,11 @@ export async function getProjects() {
     return await db.select().from(projects).orderBy(desc(projects.order));
 }
 
+export async function getProjectById(id: number) {
+    const results = await db.select().from(projects).where(eq(projects.id, id));
+    return results[0] || null;
+}
+
 export async function toggleProjectVisibility(id: number, isVisible: boolean) {
     await db.update(projects).set({ isVisible }).where(eq(projects.id, id));
     revalidatePath("/admin/projects");

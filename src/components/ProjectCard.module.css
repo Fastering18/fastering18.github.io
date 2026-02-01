@@ -1,3 +1,9 @@
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .card {
     background: var(--bg-glass);
     backdrop-filter: blur(16px);

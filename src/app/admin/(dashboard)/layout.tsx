@@ -10,6 +10,7 @@ export default async function AdminLayout({
 }) {
     const session = await auth();
 
+    // The layout is now inside (dashboard), so we can safely redirect to login if no session
     if (!session) {
         redirect("/admin/login");
     }
