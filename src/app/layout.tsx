@@ -1,5 +1,6 @@
 import { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
 import "./globals.css";
@@ -98,6 +99,7 @@ export default function RootLayout({
         <PageTransition>
           {children}
         </PageTransition>
+        <Analytics />
       </body>
     </html>
   );
