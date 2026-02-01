@@ -25,11 +25,18 @@
 
 .yearSelector {
     display: flex;
-    gap: 8px;
+    gap: 4px;
     background: rgba(255, 255, 255, 0.03);
     padding: 4px;
     border-radius: 12px;
     border: 1px solid var(--border-glass);
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+}
+
+.yearSelector::-webkit-scrollbar {
+    display: none;
 }
 
 .yearBtn {
@@ -80,6 +87,22 @@
 
 @media (max-width: 768px) {
     .container {
-        padding: 20px;
+        padding: 20px 16px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .yearSelector {
+        width: 100%;
+        padding: 6px;
+    }
+
+    .calendarWrapper {
+        justify-content: flex-start;
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
     }
 }

@@ -107,5 +107,9 @@
 
     .mobileMenu {
         display: flex;
+        background: #0a0a0a;
+        /* Solid background for mobile menu */
+        border-bottom: 1px solid var(--border-glass);
+        padding-bottom: 24px;
     }
 }

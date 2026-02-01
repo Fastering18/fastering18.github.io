@@ -163,6 +163,10 @@
     .stats {
         justify-content: center;
     }
+
+    .secondaryBio {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {

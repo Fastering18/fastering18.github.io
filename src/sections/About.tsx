@@ -69,7 +69,7 @@ export default function About() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={0.4}>
-                        <p className={styles.description}>
+                        <p className={`${styles.description} ${styles.secondaryBio}`}>
                             From developing complex Roblox games with thousands of players to building
                             Discord bots serving 300+ servers, I enjoy tackling challenging problems
                             and learning new technologies every day.

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
+import AnimatedSection from "@/components/AnimatedSection";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -17,7 +18,7 @@ export default function Hero() {
 
             <div className={styles.content}>
                 <motion.div
-                    className={styles.badge}
+                    className={`${styles.badge} ${styles.available}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -36,6 +37,14 @@ export default function Hero() {
                     <span className={styles.name}>Muhammad Brahmana</span>
                     <span className={styles.role}>Full Stack Developer</span>
                 </motion.h1>
+
+                <AnimatedSection delay={0.4}>
+                    <p className={`${styles.description} ${styles.secondaryBio}`}>
+                        From developing complex Roblox games with thousands of players to building
+                        Discord bots serving 300+ servers, I enjoy tackling challenging problems
+                        and learning new technologies every day.
+                    </p>
+                </AnimatedSection>
 
                 <motion.p
                     className={styles.description}

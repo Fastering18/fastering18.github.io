@@ -85,6 +85,17 @@
     font-size: 0.85rem;
     color: var(--accent-purple);
     margin-bottom: 32px;
+    transition: all var(--transition-normal);
+}
+
+.available {
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.available svg {
+    color: #22c55e;
 }
 
 .title {
