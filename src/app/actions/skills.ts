@@ -26,3 +26,9 @@ export async function addSkill(data: typeof skills.$inferInsert) {
     revalidatePath("/admin/skills");
     revalidatePath("/");
 }
+
+export async function updateSkill(id: number, data: Partial<typeof skills.$inferInsert>) {
+    await db.update(skills).set(data).where(eq(skills.id, id));
+    revalidatePath("/admin/skills");
+    revalidatePath("/");
+}
