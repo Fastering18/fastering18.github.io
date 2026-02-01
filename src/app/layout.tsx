@@ -94,6 +94,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Muhammad Brahmana Priambudi",
+              "url": "https://fastering.thedev.id",
+              "jobTitle": "Full Stack Developer & Game Developer",
+              "sameAs": [
+                "https://github.com/Fastering18",
+                "https://linkedin.com/in/fastering18",
+                "https://fastering18.github.io"
+              ],
+              "description": "Senior Full Stack Developer specializing in high-performance web applications and game development."
+            })
+          }}
+        />
+      </head>
       <body>
         <CustomCursor />
         <PageTransition>

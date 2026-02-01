@@ -1,0 +1,22 @@
+# Muhammad Brahmana Priambudi (Fastering18) - Portfolio
+
+Professional portfolio of Muhammad Brahmana Priambudi, a Senior Full Stack Developer and Game Developer specializing in high-performance web applications, game mechanics, and immersive digital experiences.
+
+## Core Expertise
+- **Frontend**: Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion, Vanilla CSS.
+- **Backend/Systems**: Node.js, PostgreSQL (Drizzle ORM), NextAuth.js, Bun.
+- **Game Dev**: Roblox Studio (Luau), Unity (C#).
+- **Design**: UI/UX, Glassmorphism aesthetics, visual storytelling.
+
+## Key Projects
+The site showcases various projects ranging from game development (Mojo City, Mojo Adventure) to technical web solutions (Fishjoy, UGC Trackers).
+
+## Links
+- Homepage: https://fastering.thedev.id
+- Projects: https://fastering.thedev.id/#projects
+- GitHub: https://github.com/Fastering18
+- LinkedIn: https://linkedin.com/in/fastering18
+
+## Contact
+Email: fasteringdev@gmail.com
+Available for freelance projects and technical consultations.
