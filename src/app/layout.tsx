@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
@@ -17,6 +17,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fastering.thedev.id"),
   title: {
     default: "Muhammad Brahmana Priambudi | Full Stack Developer & Game Dev",
     template: "%s | Muhammad Brahmana Priambudi",
@@ -79,6 +80,10 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
+},
+};
+
+export const viewport: Viewport = {
   themeColor: "#050505",
 };
 
