@@ -56,7 +56,7 @@ export default function Hero() {
                     <br />
                     Specializing in <span className={styles.highlight}>performance</span>,{" "}
                     <span className={styles.highlight}>accessibility</span>, and{" "}
-                    <span className={styles.highlight}>stunning design</span>.
+                    <span className={styles.highlight}>robust system</span>.
                 </motion.p>
 
                 <motion.div

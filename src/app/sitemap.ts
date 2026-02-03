@@ -3,7 +3,7 @@ import { getProjects } from '@/app/actions/projects';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const projects = await getProjects();
-    const baseUrl = 'https://fastering.thedev.id';
+    const baseUrl = 'https://fastering.is-cool.dev';
 
     const projectUrls = projects
         .filter((p) => p.isVisible)

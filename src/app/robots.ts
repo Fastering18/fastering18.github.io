@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: '/admin/',
             },
         ],
-        sitemap: 'https://fastering.thedev.id/sitemap.xml',
+        sitemap: 'https://fastering.is-cool.dev/sitemap.xml',
     };
 }

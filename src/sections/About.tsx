@@ -87,8 +87,8 @@ export default function About() {
                                 <span className={styles.statLabel}>Projects</span>
                             </div>
                             <div className={styles.stat}>
-                                <span className={styles.statNumber}>300+</span>
-                                <span className={styles.statLabel}>Server Users</span>
+                                <span className={styles.statNumber}>200K+</span>
+                                <span className={styles.statLabel}>Roblox Visits</span>
                             </div>
                         </div>
                     </AnimatedSection>

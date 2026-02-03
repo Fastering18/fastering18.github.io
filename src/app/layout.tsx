@@ -18,14 +18,14 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fastering.thedev.id"),
+  metadataBase: new URL("https://fastering.is-cool.dev"),
   title: {
     default: "Muhammad Brahmana Priambudi | Full Stack Developer & Game Dev",
     template: "%s | Muhammad Brahmana Priambudi",
   },
   description: "Senior Full Stack Developer specializing in high-performance web applications, game mechanics, and visually stunning digital experiences. Expert in Next.js, TypeScript, and Roblox Studio.",
   alternates: {
-    canonical: "https://fastering.thedev.id",
+    canonical: "https://fastering.is-cool.dev",
   },
   keywords: [
     "Muhammad Brahmana Priambudi",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "UI/UX Visual Design",
     "Software Engineer Portfolio",
   ],
-  authors: [{ name: "Muhammad Brahmana Priambudi", url: "https://fastering18.github.io" }],
+  authors: [{ name: "Muhammad Brahmana Priambudi", url: "https://fastering.is-cool.dev" }],
   creator: "Muhammad Brahmana Priambudi",
   publisher: "Muhammad Brahmana Priambudi",
   formatDetection: {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Muhammad Brahmana Priambudi | Dev",
     description: "Building the next generation of digital experiences through clean code and immersive design.",
-    url: "https://fastering.thedev.id",
+    url: "https://fastering.is-cool.dev",
     siteName: "Muhammad Brahmana Priambudi Portfolio",
     images: [
       {
@@ -80,9 +80,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico?v=2",
+    shortcut: "/favicon-16x16.png?v=2",
+    apple: "/apple-touch-icon.png?v=2",
   },
 };
 

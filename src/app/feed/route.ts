@@ -2,7 +2,7 @@ import { getProjects } from "@/app/actions/projects";
 
 export async function GET() {
     const projects = await getProjects();
-    const baseUrl = "https://fastering.thedev.id";
+    const baseUrl = "https://fastering.is-cool.dev";
 
     const items = projects
         .filter(p => p.isVisible)

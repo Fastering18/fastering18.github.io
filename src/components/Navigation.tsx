@@ -93,7 +93,23 @@ export default function Navigation() {
                                 key={link.href}
                                 href={link.href}
                                 className={styles.mobileLink}
-                                onClick={() => setIsOpen(false)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setIsOpen(false);
+                                    const element = document.querySelector(link.href);
+                                    if (element) {
+                                        const offset = 80;
+                                        const bodyRect = document.body.getBoundingClientRect().top;
+                                        const elementRect = element.getBoundingClientRect().top;
+                                        const elementPosition = elementRect - bodyRect;
+                                        const offsetPosition = elementPosition - offset;
+
+                                        window.scrollTo({
+                                            top: offsetPosition,
+                                            behavior: "smooth"
+                                        });
+                                    }
+                                }}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.05 }}
