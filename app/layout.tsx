@@ -23,6 +23,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  other: {
+    'http-equiv': 'refresh',
+    content: '0; url=https://fastering.is-a.dev',
+  },
   manifest: '/static/images/favicon/site.webmanifest',
 };
 
@@ -34,6 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: `
 (function() {
+window.location.href = "https://fastering.is-a.dev";
   try {
     var theme = localStorage.theme;
     if (theme === 'dark' || !theme) {
