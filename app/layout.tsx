@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: `
 (function() {
-window.location.href = "https://fastering.is-a.dev";
+window.location.href = "https://fastering.is-cool.dev";
   try {
     var theme = localStorage.theme;
     if (theme === 'dark' || !theme) {
