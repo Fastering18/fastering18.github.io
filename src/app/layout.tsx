@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     canonical: "https://fastering.is-cool.dev",
   },
   verification: {
-    google: "Un31xi-2YuJVrc7Y8xP1Jl0m41fYHApzlI9-j48YY64",
+    google: "CkbFuBULQLzPPzVDQCdHM4H62G5u9RP1gBh2ZxUADlQ",
   },
   keywords: [
     "Muhammad Brahmana Priambudi",
