@@ -1,11 +1,12 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import GlassCard from "@/components/GlassCard";
+import CdnManager from "@/components/admin/CdnManager";
 import { getDriveAuthStatus } from "@/lib/drive/auth";
 import { listCdnFiles } from "@/lib/drive/cdn";
 import { SITE_URL } from "@/lib/seo";
 import styles from "./Cdn.module.css";
-import { HardDrive, AlertTriangle, CheckCircle2, ExternalLink } from "lucide-react";
+import { HardDrive, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,7 @@ export default async function AdminCdnPage() {
 
   if (status.ready) {
     try {
-      files = await listCdnFiles(80);
+      files = await listCdnFiles(300);
     } catch (e) {
       listError = e instanceof Error ? e.message : "Failed to list Drive files";
     }
@@ -31,8 +32,8 @@ export default async function AdminCdnPage() {
         <div>
           <h1 className={styles.title}>Drive CDN</h1>
           <p className={styles.subtitle}>
-            Google Drive folder as object storage. Public short links:
-            <code> /filename.ext</code> or <code> /randid.ext</code>
+            Manage Google Drive assets and public short links
+            <code> /filename.ext</code>
           </p>
         </div>
       </header>
@@ -40,7 +41,7 @@ export default async function AdminCdnPage() {
       <div className={styles.grid}>
         <GlassCard className={styles.card}>
           <h2 className={styles.cardTitle}>
-            <HardDrive size={18} /> Connection status
+            <HardDrive size={18} /> Connection
           </h2>
           <ul className={styles.statusList}>
             <li>
@@ -70,28 +71,17 @@ export default async function AdminCdnPage() {
               </span>
             </li>
             <li>
-              {status.oauthClient ? (
+              {status.ready ? (
                 <CheckCircle2 size={16} className={styles.ok} />
               ) : (
                 <AlertTriangle size={16} className={styles.warn} />
               )}
-              <span>OAuth client ID/secret (for google-drive-s3 path)</span>
-            </li>
-            <li>
-              {status.oauthRefreshToken ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>
-                OAuth refresh token{" "}
-                {status.oauthRefreshToken ? "present" : "MISSING"}
-              </span>
+              <span>{status.ready ? "CDN ready" : "CDN not ready"}</span>
             </li>
           </ul>
           {status.missing.length > 0 && (
             <div className={styles.missing}>
-              <strong>Missing for ready CDN:</strong>
+              <strong>Missing:</strong>
               <ul>
                 {status.missing.map((m) => (
                   <li key={m}>{m}</li>
@@ -99,84 +89,36 @@ export default async function AdminCdnPage() {
               </ul>
             </div>
           )}
+          {status.notes?.length ? (
+            <ul className={styles.notes}>
+              {status.notes.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          ) : null}
         </GlassCard>
 
         <GlassCard className={styles.card}>
-          <h2 className={styles.cardTitle}>How short links work</h2>
+          <h2 className={styles.cardTitle}>Short links</h2>
           <ol className={styles.steps}>
-            <li>Create a Drive folder for public CDN assets.</li>
+            <li>Upload below (or put files in the shared Drive folder).</li>
             <li>
-              Share it with the service account as{" "}
-              <strong>Viewer</strong> or <strong>Content manager</strong>.
+              Public URL is <code>{SITE_URL}/filename.ext</code>
             </li>
-            <li>
-              Put files named exactly like the short path, e.g.{" "}
-              <code>hero.webp</code> or <code>a8f3c1.png</code>.
-            </li>
-            <li>
-              Open{" "}
-              <code>
-                {SITE_URL}/filename.ext
-              </code>
-            </li>
+            <li>Use Copy URL on any row.</li>
+            <li>Rename updates the public path; delete moves file to trash.</li>
           </ol>
-          <p className={styles.hint}>
-            Also available as{" "}
-            <code>
-              {SITE_URL}/api/cdn/filename.ext
-            </code>
-            . Reserved names (favicon, robots, google verify HTML) stay local.
-          </p>
         </GlassCard>
       </div>
 
       <GlassCard className={styles.card}>
-        <h2 className={styles.cardTitle}>Files in CDN folder</h2>
-        {listError && <p className={styles.error}>{listError}</p>}
-        {!status.ready && (
-          <p className={styles.hint}>
-            Configure credentials and folder ID to list files. See{" "}
-            <code>.private/DRIVE-CDN.md</code>.
-          </p>
-        )}
-        {status.ready && !listError && files.length === 0 && (
-          <p className={styles.hint}>Folder is empty. Upload a file to Drive.</p>
-        )}
-        {files.length > 0 && (
-          <div className={styles.tableWrap}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Size</th>
-                  <th>Short URL</th>
-                </tr>
-              </thead>
-              <tbody>
-                {files.map((f) => {
-                  const short = `${SITE_URL}/${f.name}`;
-                  return (
-                    <tr key={f.id}>
-                      <td className={styles.mono}>{f.name}</td>
-                      <td>{f.mimeType}</td>
-                      <td>
-                        {f.size
-                          ? `${Math.max(1, Math.round(Number(f.size) / 1024))} KB`
-                          : "n/a"}
-                      </td>
-                      <td>
-                        <a href={short} target="_blank" rel="noopener noreferrer">
-                          /{f.name} <ExternalLink size={12} />
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <h2 className={styles.cardTitle}>Files</h2>
+        <CdnManager
+          initialFiles={files}
+          siteUrl={SITE_URL}
+          ready={status.ready}
+          listError={listError}
+        />
       </GlassCard>
     </div>
   );
