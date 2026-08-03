@@ -62,8 +62,8 @@ export default function About() {
 
                     <AnimatedSection delay={0.3}>
                         <p className={styles.description}>
-                            I&apos;m a full stack developer who spends most days in{" "}
-                            <strong>Luau</strong>, <strong>Node.js</strong>, and{" "}
+                            I&apos;m <strong>Fastering18</strong>, a full stack developer who spends
+                            most days in <strong>Luau</strong>, <strong>Node.js</strong>, and{" "}
                             <strong>TypeScript</strong>. On Roblox I own Knit services, economies,
                             monetization, and admin tooling. On the web I build fast Next.js apps
                             with clear UX and durable backends.

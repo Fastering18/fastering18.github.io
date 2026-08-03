@@ -140,6 +140,11 @@
     margin-right: auto;
 }
 
+.description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 .pills {
     display: flex;
     flex-wrap: wrap;

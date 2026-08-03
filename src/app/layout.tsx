@@ -12,6 +12,7 @@ import {
   SITE_HANDLE,
   SITE_NAME,
   SITE_URL,
+  organizationJsonLd,
   personJsonLd,
   websiteJsonLd,
 } from "@/lib/seo";
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
-  applicationName: `${SITE_NAME} Portfolio`,
+  applicationName: "Fastering18 Portfolio",
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
   keywords: DEFAULT_KEYWORDS,
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
-    siteName: `${SITE_NAME} Portfolio`,
+    siteName: "Fastering18 Portfolio",
     locale: "en_US",
     type: "website",
     images: [
@@ -80,7 +81,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | ${SITE_HANDLE}`,
+    title: `Fastering18 | ${SITE_NAME}`,
     description: DEFAULT_DESCRIPTION,
     creator: SITE_HANDLE,
     site: SITE_HANDLE,
@@ -155,7 +156,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} Projects`} href="/feed" />
-        <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
+        <JsonLd data={[personJsonLd(), websiteJsonLd(), organizationJsonLd()]} />
       </head>
       <body>
         <CustomCursor />

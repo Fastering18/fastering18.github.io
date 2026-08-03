@@ -1,18 +1,25 @@
 export const SITE_URL = "https://fastering.is-cool.dev";
 export const SITE_NAME = "Muhammad Brahmana Priambudi";
+export const SITE_BRAND = "Fastering18";
 export const SITE_HANDLE = "@FasteringDev";
 export const SITE_EMAIL = "brahmana@fastering.thedev.id";
 
 export const DEFAULT_TITLE =
-  "Muhammad Brahmana Priambudi | Full Stack & Roblox Systems Developer";
+  "Fastering18 | Muhammad Brahmana Priambudi | Full Stack & Roblox Developer";
 
 export const DEFAULT_DESCRIPTION =
-  "Portfolio of Muhammad Brahmana Priambudi (Fastering18). Full stack developer and Roblox systems engineer building Knit game economies, multiplayer loops, and modern Next.js apps.";
+  "Fastering18 (Muhammad Brahmana Priambudi) portfolio. Full stack and Roblox systems developer building Knit economies, multiplayer games, and Next.js apps. Also known as Fastering and FasteringDev.";
 
 export const DEFAULT_KEYWORDS = [
-  "Muhammad Brahmana Priambudi",
   "Fastering18",
+  "fastering18",
+  "Fastering",
+  "fastering",
   "FasteringDev",
+  "Muhammad Brahmana Priambudi",
+  "Fastering18 portfolio",
+  "Fastering18 developer",
+  "Fastering18 Roblox",
   "Full Stack Developer Indonesia",
   "Roblox Developer",
   "Roblox Scripter",
@@ -23,7 +30,6 @@ export const DEFAULT_KEYWORDS = [
   "Game Developer Portfolio",
   "Node.js",
   "Software Engineer Indonesia",
-  "Surabaya Developer",
 ];
 
 export function absoluteUrl(path = "/") {
@@ -44,13 +50,25 @@ export function personJsonLd() {
     "@type": "Person",
     "@id": `${SITE_URL}/#person`,
     name: SITE_NAME,
-    alternateName: ["Fastering18", "FasteringDev", "MBP"],
+    alternateName: [
+      "Fastering18",
+      "fastering18",
+      "Fastering",
+      "FasteringDev",
+      "MBP",
+    ],
     url: SITE_URL,
     image: absoluteUrl("/images/profile.png"),
     jobTitle: "Full Stack Developer & Roblox Systems Developer",
     description: DEFAULT_DESCRIPTION,
     email: SITE_EMAIL,
     nationality: "Indonesian",
+    brand: {
+      "@type": "Brand",
+      name: "Fastering18",
+      alternateName: ["Fastering", "FasteringDev"],
+      url: SITE_URL,
+    },
     address: {
       "@type": "PostalAddress",
       addressCountry: "ID",
@@ -64,6 +82,7 @@ export function personJsonLd() {
       "Node.js",
       "Game economy design",
       "Multiplayer systems",
+      "Fastering18",
     ],
     sameAs: [
       "https://github.com/Fastering18",
@@ -79,17 +98,46 @@ export function websiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
-    name: `${SITE_NAME} Portfolio`,
+    name: "Fastering18 Portfolio",
+    alternateName: [
+      "Fastering18",
+      "Fastering portfolio",
+      "Muhammad Brahmana Priambudi Portfolio",
+    ],
     url: SITE_URL,
     description: DEFAULT_DESCRIPTION,
     inLanguage: "en",
     publisher: { "@id": `${SITE_URL}/#person` },
     author: { "@id": `${SITE_URL}/#person` },
+    copyrightHolder: { "@id": `${SITE_URL}/#person` },
     potentialAction: {
       "@type": "SearchAction",
       target: `${SITE_URL}/?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": `${SITE_URL}/#organization`,
+    name: "Fastering18",
+    alternateName: ["Fastering", "FasteringDev", SITE_NAME],
+    url: SITE_URL,
+    logo: absoluteUrl("/android-chrome-512x512.png"),
+    image: absoluteUrl("/images/og-image.png"),
+    description: DEFAULT_DESCRIPTION,
+    email: SITE_EMAIL,
+    founder: { "@id": `${SITE_URL}/#person` },
+    employee: { "@id": `${SITE_URL}/#person` },
+    areaServed: "Worldwide",
+    sameAs: [
+      "https://github.com/Fastering18",
+      "https://x.com/FasteringDev",
+      "https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320",
+    ],
   };
 }
 
@@ -118,7 +166,8 @@ export function projectJsonLd(project: {
 }) {
   const url = absoluteUrl(`/projects/${project.id}`);
   const description = truncateMeta(
-    project.summary || project.description.replace(/##\s+/g, "").replace(/\n+/g, " "),
+    project.summary ||
+      project.description.replace(/##\s+/g, "").replace(/\n+/g, " "),
     300
   );
 
@@ -134,7 +183,7 @@ export function projectJsonLd(project: {
     datePublished: new Date(project.projectDate).toISOString(),
     author: { "@id": `${SITE_URL}/#person` },
     creator: { "@id": `${SITE_URL}/#person` },
-    keywords: project.tags.join(", "),
+    keywords: [...project.tags, "Fastering18", "Fastering"].join(", "),
     inLanguage: "en",
     isPartOf: { "@id": `${SITE_URL}/#website` },
     mainEntityOfPage: url,
@@ -146,9 +195,7 @@ export function projectJsonLd(project: {
   };
 }
 
-export function breadcrumbJsonLd(
-  items: { name: string; path: string }[]
-) {
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -167,7 +214,7 @@ export function itemListJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Featured Projects",
+    name: "Fastering18 Featured Projects",
     itemListOrder: "https://schema.org/ItemListOrderDescending",
     numberOfItems: projects.length,
     itemListElement: projects.map((p, i) => ({

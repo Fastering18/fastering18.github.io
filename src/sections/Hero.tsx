@@ -36,11 +36,12 @@ export default function Hero() {
                 >
                     <span className={styles.line}>Hi, I&apos;m</span>
                     <span className={styles.name}>Muhammad Brahmana Priambudi</span>
-                    <span className={styles.role}>Full Stack &amp; Roblox Systems Developer</span>
+                    <span className={styles.role}>Fastering18 · Full Stack &amp; Roblox Systems Developer</span>
                 </motion.h1>
 
                 <AnimatedSection delay={0.4}>
                     <p className={styles.description}>
+                        I&apos;m <strong>Fastering18</strong> (also Fastering / FasteringDev).
                         I ship player facing game systems and modern web apps with Knit services,
                         live economies, and clean TypeScript stacks that hold up under real traffic.
                     </p>
