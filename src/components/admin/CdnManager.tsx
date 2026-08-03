@@ -19,6 +19,7 @@ type Props = {
   initialFiles: DriveFileMeta[];
   siteUrl: string;
   ready: boolean;
+  canWrite?: boolean;
   listError?: string | null;
 };
 
@@ -39,6 +40,7 @@ export default function CdnManager({
   initialFiles,
   siteUrl,
   ready,
+  canWrite = false,
   listError,
 }: Props) {
   const [files, setFiles] = useState(initialFiles);
@@ -184,6 +186,13 @@ export default function CdnManager({
 
   return (
     <div className={styles.wrap}>
+      {!canWrite && (
+        <p className={styles.error}>
+          Uploads need your Google account. Click{" "}
+          <strong>Connect Google Drive</strong> above (service accounts have no
+          storage quota on personal Gmail).
+        </p>
+      )}
       <form className={styles.upload} onSubmit={onUpload}>
         <div className={styles.uploadRow}>
           <label className={styles.fileBtn}>
@@ -193,6 +202,7 @@ export default function CdnManager({
               type="file"
               onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
               hidden
+              disabled={!canWrite}
             />
           </label>
           <input
@@ -201,20 +211,21 @@ export default function CdnManager({
             placeholder="Optional public name (e.g. hero.webp)"
             value={customName}
             onChange={(e) => setCustomName(e.target.value)}
-            disabled={useRandom}
+            disabled={useRandom || !canWrite}
           />
           <label className={styles.check}>
             <input
               type="checkbox"
               checked={useRandom}
               onChange={(e) => setUseRandom(e.target.checked)}
+              disabled={!canWrite}
             />
             Random short id
           </label>
           <button
             type="submit"
             className={styles.primary}
-            disabled={uploading || !selectedFile}
+            disabled={uploading || !selectedFile || !canWrite}
           >
             {uploading ? "Uploading..." : "Upload"}
           </button>
@@ -229,8 +240,8 @@ export default function CdnManager({
           </button>
         </div>
         <p className={styles.hint}>
-          Public URL becomes <code>{base}/filename.ext</code>. Share the Drive
-          folder with the service account as Content manager so upload works.
+          Public URL becomes <code>{base}/filename.ext</code>. Uploads use your
+          connected Google account storage (not the service account).
         </p>
       </form>
 
@@ -357,6 +368,7 @@ export default function CdnManager({
                           className={styles.actionBtn}
                           title="Rename"
                           onClick={() => startRename(file)}
+                          disabled={!canWrite}
                         >
                           <Pencil size={15} />
                         </button>
@@ -365,6 +377,7 @@ export default function CdnManager({
                           className={`${styles.actionBtn} ${styles.danger}`}
                           title="Delete"
                           onClick={() => void onDelete(file)}
+                          disabled={!canWrite}
                         >
                           <Trash2 size={15} />
                         </button>

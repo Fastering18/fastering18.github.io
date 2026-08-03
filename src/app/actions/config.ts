@@ -15,5 +15,6 @@ export async function updateConfig(key: string, value: string) {
         .values({ key, value })
         .onConflictDoUpdate({ target: config.key, set: { value } });
     revalidatePath("/admin/settings");
+    revalidatePath("/admin/cdn");
     revalidatePath("/");
 }

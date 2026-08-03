@@ -22,7 +22,7 @@ export async function GET() {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const status = getDriveAuthStatus();
+  const status = await getDriveAuthStatus();
   if (!status.ready) {
     return NextResponse.json(
       { error: "not_configured", status, files: [] },

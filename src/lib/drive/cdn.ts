@@ -11,7 +11,6 @@ export function isValidCdnKey(key: string) {
 
 export function sanitizeCdnFileName(name: string): string | null {
   const base = name.split(/[/\\]/).pop()?.trim() || "";
-  // spaces -> underscores, strip unsafe chars
   const cleaned = base
     .replace(/\s+/g, "_")
     .replace(/[^A-Za-z0-9._-]/g, "")
@@ -21,7 +20,8 @@ export function sanitizeCdnFileName(name: string): string | null {
 }
 
 export function randomCdnName(ext: string) {
-  const e = ext.replace(/^\./, "").replace(/[^A-Za-z0-9]/g, "").slice(0, 12) || "bin";
+  const e =
+    ext.replace(/^\./, "").replace(/[^A-Za-z0-9]/g, "").slice(0, 12) || "bin";
   const id = crypto.randomUUID().replace(/-/g, "").slice(0, 12);
   return `${id}.${e}`;
 }
@@ -38,16 +38,21 @@ export type DriveFileMeta = {
   thumbnailLink?: string;
 };
 
-async function driveFetch(path: string, init?: RequestInit) {
-  const { token } = await getAccessToken();
-  const res = await fetch(`${DRIVE_API}${path}`, {
+async function driveFetch(
+  path: string,
+  init?: RequestInit,
+  opts?: { requireWrite?: boolean }
+) {
+  const { token } = await getAccessToken({
+    requireWrite: opts?.requireWrite,
+  });
+  return fetch(`${DRIVE_API}${path}`, {
     ...init,
     headers: {
       Authorization: `Bearer ${token}`,
       ...(init?.headers || {}),
     },
   });
-  return res;
 }
 
 export async function findFileInCdnFolder(
@@ -108,7 +113,9 @@ export async function listCdnFiles(limit = 200): Promise<DriveFileMeta[]> {
     });
     if (!res.ok) {
       const body = await res.text();
-      throw new Error(`Drive list failed (${res.status}): ${body.slice(0, 300)}`);
+      throw new Error(
+        `Drive list failed (${res.status}): ${body.slice(0, 300)}`
+      );
     }
     const data = (await res.json()) as {
       files?: DriveFileMeta[];
@@ -153,7 +160,6 @@ export async function uploadCdnFile(input: {
     );
   }
 
-  // Avoid duplicate names in folder (short URL uniqueness)
   const existing = await findFileInCdnFolder(name);
   if (existing) {
     throw new Error(
@@ -161,7 +167,8 @@ export async function uploadCdnFile(input: {
     );
   }
 
-  const { token, folderId } = await getAccessToken();
+  // requireWrite: use your Google account quota (not service account)
+  const { token, folderId } = await getAccessToken({ requireWrite: true });
   const metadata = {
     name,
     parents: [folderId],
@@ -176,11 +183,7 @@ export async function uploadCdnFile(input: {
     "utf8"
   );
   const epilogue = Buffer.from(`\r\n--${boundary}--`, "utf8");
-  const body = Buffer.concat([
-    preamble,
-    Buffer.from(input.data),
-    epilogue,
-  ]);
+  const body = Buffer.concat([preamble, Buffer.from(input.data), epilogue]);
 
   const res = await fetch(
     `${DRIVE_UPLOAD}/files?uploadType=multipart&supportsAllDrives=true&fields=id,name,mimeType,size,modifiedTime,createdTime,md5Checksum,webViewLink,thumbnailLink`,
@@ -196,6 +199,11 @@ export async function uploadCdnFile(input: {
 
   if (!res.ok) {
     const text = await res.text();
+    if (text.includes("storage quota") || text.includes("Service Accounts")) {
+      throw new Error(
+        "Google blocked the upload: service accounts have no storage quota. Connect Google Drive with your Gmail account in Admin CDN (OAuth), then try again."
+      );
+    }
     throw new Error(`Upload failed (${res.status}): ${text.slice(0, 400)}`);
   }
 
@@ -209,7 +217,6 @@ export async function renameCdnFile(
   const name = sanitizeCdnFileName(newName);
   if (!name) throw new Error("Invalid new file name");
 
-  // Ensure file is in CDN folder
   const owned = await getFileIfInCdnFolder(fileId);
   if (!owned) throw new Error("File not found in CDN folder");
 
@@ -224,7 +231,8 @@ export async function renameCdnFile(
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
-    }
+    },
+    { requireWrite: true }
   );
 
   if (!res.ok) {
@@ -239,14 +247,14 @@ export async function deleteCdnFile(fileId: string): Promise<void> {
   const owned = await getFileIfInCdnFolder(fileId);
   if (!owned) throw new Error("File not found in CDN folder");
 
-  // Soft-delete to trash (safer than permanent delete)
   const res = await driveFetch(
     `/files/${encodeURIComponent(fileId)}?supportsAllDrives=true`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ trashed: true }),
-    }
+    },
+    { requireWrite: true }
   );
 
   if (!res.ok) {
