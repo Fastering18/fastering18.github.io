@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
+import CountUp from "@/components/CountUp";
 import styles from "./About.module.css";
 
 export default function About() {
@@ -81,15 +82,15 @@ export default function About() {
                     <AnimatedSection delay={0.5}>
                         <div className={styles.stats}>
                             <div className={styles.stat}>
-                                <span className={styles.statNumber}>5+</span>
+                                <CountUp end={5} suffix="+" className={styles.statNumber} duration={1400} />
                                 <span className={styles.statLabel}>Years Coding</span>
                             </div>
                             <div className={styles.stat}>
-                                <span className={styles.statNumber}>8+</span>
+                                <CountUp end={8} suffix="+" className={styles.statNumber} duration={1600} />
                                 <span className={styles.statLabel}>Shipped Games</span>
                             </div>
                             <div className={styles.stat}>
-                                <span className={styles.statNumber}>200K+</span>
+                                <CountUp end={200000} suffix="+" compact className={styles.statNumber} duration={2000} />
                                 <span className={styles.statLabel}>Roblox Visits</span>
                             </div>
                         </div>

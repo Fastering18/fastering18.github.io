@@ -14,7 +14,7 @@ export default async function Projects() {
                     <span className={styles.label}>My Work</span>
                     <h2 className={styles.title}>Featured Projects</h2>
                     <p className={styles.subtitle}>
-                        Roblox systems, live economies, and web tools—built as sole or lead developer with real players in mind.
+                        Roblox systems, live economies, and web tools, built as sole or lead developer with real players in mind.
                     </p>
                 </AnimatedSection>
 

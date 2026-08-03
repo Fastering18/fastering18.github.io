@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Briefcase, Code, FileText, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Briefcase, Code, FileText, Settings, LogOut, BarChart3 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import styles from "./AdminSidebar.module.css";
 
 const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
+    { name: "Analytics", icon: BarChart3, href: "/admin/analytics" },
     { name: "Projects", icon: Briefcase, href: "/admin/projects" },
     { name: "Skills", icon: Code, href: "/admin/skills" },
     { name: "Blogs", icon: FileText, href: "/admin/blogs" },
@@ -25,7 +26,10 @@ export default function AdminSidebar() {
             <nav className={styles.nav}>
                 {menuItems.map((item) => {
                     const Icon = item.icon;
-                    const isActive = pathname === item.href;
+                    const isActive =
+                        item.href === "/admin"
+                            ? pathname === "/admin"
+                            : pathname === item.href || pathname.startsWith(item.href + "/");
                     return (
                         <Link
                             key={item.href}

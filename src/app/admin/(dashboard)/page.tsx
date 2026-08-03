@@ -1,20 +1,57 @@
 import GlassCard from "@/components/GlassCard";
 import styles from "./Dashboard.module.css";
-import { Briefcase, Code, FileText, Users } from "lucide-react";
+import { Briefcase, Code, Eye, Users, BarChart3 } from "lucide-react";
+import { getProjects } from "@/app/actions/projects";
+import { getSkills } from "@/app/actions/skills";
+import { getAnalyticsSnapshot } from "@/lib/analytics/stats";
+import Link from "next/link";
 
-export default function AdminDashboard() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminDashboard() {
+    const [projects, skills, analytics] = await Promise.all([
+        getProjects(),
+        getSkills(),
+        getAnalyticsSnapshot(30).catch(() => null),
+    ]);
+
+    const visibleProjects = projects.filter((p) => p.isVisible).length;
+    const visibleSkills = skills.filter((s) => s.isVisible).length;
+
     const stats = [
-        { name: "Total Projects", value: "12", icon: Briefcase, color: "var(--accent-purple)" },
-        { name: "Skills Listed", value: "32", icon: Code, color: "var(--accent-blue)" },
-        { name: "Blog Posts", value: "5", icon: FileText, color: "#10b981" },
-        { name: "Visible Sections", value: "6/8", icon: Users, color: "#f59e0b" },
+        {
+            name: "Projects",
+            value: `${visibleProjects}/${projects.length}`,
+            icon: Briefcase,
+            color: "var(--accent-purple)",
+        },
+        {
+            name: "Skills",
+            value: `${visibleSkills}`,
+            icon: Code,
+            color: "var(--accent-blue)",
+        },
+        {
+            name: "Total views",
+            value: analytics ? analytics.totalViews.toLocaleString() : "-",
+            icon: Eye,
+            color: "#10b981",
+        },
+        {
+            name: "Unique visitors",
+            value: analytics ? analytics.uniqueVisitors.toLocaleString() : "-",
+            icon: Users,
+            color: "#f59e0b",
+        },
     ];
 
     return (
         <div className={styles.dashboard}>
             <header className={styles.header}>
                 <h1 className={styles.title}>Dashboard Overview</h1>
-                <p className={styles.subtitle}>Welcome back, Admin. Here's what's happening with your portfolio.</p>
+                <p className={styles.subtitle}>
+                    Welcome back. Portfolio content and private traffic at a glance.
+                </p>
             </header>
 
             <div className={styles.statsGrid}>
@@ -35,9 +72,36 @@ export default function AdminDashboard() {
             </div>
 
             <div className={styles.recentActivity}>
-                <h2 className={styles.sectionTitle}>Recent Activity</h2>
+                <div className={styles.sectionHead}>
+                    <h2 className={styles.sectionTitle}>Traffic (30 days)</h2>
+                    <Link href="/admin/analytics" className={styles.linkBtn}>
+                        <BarChart3 size={16} />
+                        Open analytics
+                    </Link>
+                </div>
                 <GlassCard className={styles.activityCard}>
-                    <p className={styles.placeholder}>No recent activity to show.</p>
+                    {analytics ? (
+                        <div className={styles.miniStats}>
+                            <div>
+                                <strong>{analytics.todayViews}</strong>
+                                <span>today</span>
+                            </div>
+                            <div>
+                                <strong>{analytics.last7DaysViews}</strong>
+                                <span>last 7 days</span>
+                            </div>
+                            <div>
+                                <strong>{analytics.uniqueSessions}</strong>
+                                <span>sessions</span>
+                            </div>
+                            <div>
+                                <strong>{analytics.byCountry[0]?.country || "n/a"}</strong>
+                                <span>top country</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className={styles.placeholder}>Analytics unavailable right now.</p>
+                    )}
                 </GlassCard>
             </div>
         </div>

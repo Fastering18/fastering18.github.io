@@ -1,0 +1,207 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.5;
+}
+
+.kpiGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.kpi {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+}
+
+.kpiIcon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(59, 130, 246, 0.35));
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.kpiLabel {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.kpiValue {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.panel {
+    padding: 22px;
+}
+
+.panelTitle {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 650;
+    margin-bottom: 16px;
+}
+
+.chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    min-height: 180px;
+    padding-top: 12px;
+    overflow-x: auto;
+}
+
+.chartCol {
+    flex: 1 0 18px;
+    min-width: 14px;
+    max-width: 36px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.chartBar {
+    width: 100%;
+    border-radius: 6px 6px 2px 2px;
+    background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
+    min-height: 4px;
+    transition: height 0.3s ease;
+}
+
+.chartLabel {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    writing-mode: horizontal-tb;
+    transform: rotate(-45deg);
+    transform-origin: top center;
+    white-space: nowrap;
+    height: 18px;
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.barList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.barRow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.barMeta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.85rem;
+}
+
+.barLabel {
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.barValue {
+    color: var(--text-primary);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.barTrack {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+}
+
+.tableWrap {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.table th,
+.table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-glass);
+    white-space: nowrap;
+}
+
+.table th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8rem;
+}
+
+.empty {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    padding: 8px 0;
+}
+
+@media (max-width: 640px) {
+    .kpiValue {
+        font-size: 1.2rem;
+    }
+}

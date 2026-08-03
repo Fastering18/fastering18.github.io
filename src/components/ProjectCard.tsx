@@ -35,11 +35,11 @@ export default function ProjectCard({ project, index, featured = false }: Projec
         >
             <motion.article
                 className={`${styles.card} ${featured ? styles.featured : ""}`}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.4) }}
-                whileHover={{ y: -6 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.06, 0.3), ease: "easeOut" }}
+                whileHover={{ y: -4 }}
             >
                 <div className={styles.imageWrapper}>
                     <Image

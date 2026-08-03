@@ -69,3 +69,50 @@
     color: var(--text-secondary);
     font-style: italic;
 }
+
+.sectionHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.sectionHead .sectionTitle {
+    margin-bottom: 0;
+}
+
+.linkBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+}
+
+.miniStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    text-align: left;
+}
+
+.miniStats strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.miniStats span {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.activityCard {
+    text-align: left;
+}

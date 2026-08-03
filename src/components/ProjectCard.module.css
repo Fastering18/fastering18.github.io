@@ -11,16 +11,18 @@
 
 .card {
     background: var(--bg-glass);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-xl);
     overflow: hidden;
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
+    content-visibility: auto;
+    contain-intrinsic-size: 360px;
 }
 
 .card:hover {

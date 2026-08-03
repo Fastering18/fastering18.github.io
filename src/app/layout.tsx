@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
+import VisitorTracker from "@/components/VisitorTracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -123,6 +124,7 @@ export default function RootLayout({
       </head>
       <body>
         <CustomCursor />
+        <VisitorTracker />
         <PageTransition>
           {children}
         </PageTransition>

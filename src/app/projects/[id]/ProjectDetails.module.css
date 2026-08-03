@@ -156,17 +156,22 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    z-index: 1;
 }
 
 .sidebarCard {
     padding: 24px;
-    position: sticky;
-    top: 100px;
-}
-
-.sidebarCard + .sidebarCard {
-    position: static;
+    position: relative;
+    flex-shrink: 0;
 }
 
 .sidebarTitle {
@@ -266,19 +271,24 @@
     color: var(--text-secondary);
 }
 
+.content {
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+}
+
 @media (max-width: 1024px) {
     .layout {
         grid-template-columns: 1fr;
     }
 
     .sidebar {
+        position: static;
+        max-height: none;
+        overflow: visible;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
-    }
-
-    .sidebarCard {
-        position: static;
     }
 }
 
