@@ -9,7 +9,6 @@ import {
   Upload,
   RefreshCw,
   ExternalLink,
-  Image as ImageIcon,
   FileIcon,
 } from "lucide-react";
 import styles from "./CdnManager.module.css";
@@ -84,17 +83,17 @@ export default function CdnManager({
     });
   }, []);
 
-  const shortUrl = (name: string) => `${base}/${name}`;
+  const encodeName = (name: string) => encodeURIComponent(name);
+  const embedUrl = (name: string) => `${base}/${encodeName(name)}`;
+  const rawUrl = (name: string) => `${base}/r/${encodeName(name)}`;
 
-  const copyUrl = async (file: DriveFileMeta) => {
-    const url = shortUrl(file.name);
+  const copyText = async (id: string, url: string, label: string) => {
     try {
       await navigator.clipboard.writeText(url);
-      setCopiedId(file.id);
-      setMessage(`Copied ${url}`);
-      setTimeout(() => setCopiedId((id) => (id === file.id ? null : id)), 1800);
+      setCopiedId(id);
+      setMessage(`Copied ${label}: ${url}`);
+      setTimeout(() => setCopiedId((cur) => (cur === id ? null : cur)), 1800);
     } catch {
-      // fallback
       window.prompt("Copy URL:", url);
     }
   };
@@ -188,9 +187,7 @@ export default function CdnManager({
     <div className={styles.wrap}>
       {!canWrite && (
         <p className={styles.error}>
-          Uploads need your Google account. Click{" "}
-          <strong>Connect Google Drive</strong> above (service accounts have no
-          storage quota on personal Gmail).
+          Connect Google Drive above to enable upload, rename, and delete.
         </p>
       )}
       <form className={styles.upload} onSubmit={onUpload}>
@@ -208,7 +205,7 @@ export default function CdnManager({
           <input
             className={styles.input}
             type="text"
-            placeholder="Optional public name (e.g. hero.webp)"
+            placeholder="Optional name (spaces ok, e.g. my clip.mp4)"
             value={customName}
             onChange={(e) => setCustomName(e.target.value)}
             disabled={useRandom || !canWrite}
@@ -220,7 +217,7 @@ export default function CdnManager({
               onChange={(e) => setUseRandom(e.target.checked)}
               disabled={!canWrite}
             />
-            Random short id
+            Random id
           </label>
           <button
             type="submit"
@@ -240,8 +237,8 @@ export default function CdnManager({
           </button>
         </div>
         <p className={styles.hint}>
-          Public URL becomes <code>{base}/filename.ext</code>. Uploads use your
-          connected Google account storage (not the service account).
+          Embed (Discord/preview): <code>{base}/file.ext</code> · Raw file:{" "}
+          <code>{base}/r/file.ext</code>
         </p>
       </form>
 
@@ -278,7 +275,8 @@ export default function CdnManager({
             </thead>
             <tbody>
               {filtered.map((file) => {
-                const url = shortUrl(file.name);
+                const embed = embedUrl(file.name);
+                const raw = rawUrl(file.name);
                 const img = isImage(file.mimeType, file.name);
                 return (
                   <tr key={file.id}>
@@ -286,14 +284,14 @@ export default function CdnManager({
                       {img ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={url}
+                          src={raw}
                           alt=""
                           className={styles.thumb}
                           loading="lazy"
                         />
                       ) : (
                         <span className={styles.fileIcon}>
-                          {img ? <ImageIcon size={16} /> : <FileIcon size={16} />}
+                          <FileIcon size={16} />
                         </span>
                       )}
                     </td>
@@ -331,12 +329,20 @@ export default function CdnManager({
                         <div className={styles.nameCell}>
                           <span className={styles.mono}>{file.name}</span>
                           <a
-                            href={url}
+                            href={embed}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.quietLink}
                           >
-                            /{file.name} <ExternalLink size={12} />
+                            embed <ExternalLink size={12} />
+                          </a>
+                          <a
+                            href={raw}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.quietLink}
+                          >
+                            raw <ExternalLink size={12} />
                           </a>
                         </div>
                       )}
@@ -353,15 +359,32 @@ export default function CdnManager({
                         <button
                           type="button"
                           className={styles.actionBtn}
-                          title="Copy public URL"
-                          onClick={() => void copyUrl(file)}
+                          title="Copy embed URL"
+                          onClick={() =>
+                            void copyText(`${file.id}-embed`, embed, "embed")
+                          }
                         >
-                          {copiedId === file.id ? (
+                          {copiedId === `${file.id}-embed` ? (
                             <Check size={15} />
                           ) : (
                             <Copy size={15} />
                           )}
-                          <span>Copy URL</span>
+                          <span>Embed</span>
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.actionBtn}
+                          title="Copy raw file URL"
+                          onClick={() =>
+                            void copyText(`${file.id}-raw`, raw, "raw")
+                          }
+                        >
+                          {copiedId === `${file.id}-raw` ? (
+                            <Check size={15} />
+                          ) : (
+                            <Copy size={15} />
+                          )}
+                          <span>Raw</span>
                         </button>
                         <button
                           type="button"

@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
-    siteName: "Fastering18 Portfolio",
+    siteName: "Fastering18",
     locale: "en_US",
     type: "website",
     images: [
@@ -129,14 +129,15 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   other: {
-    "msapplication-TileColor": "#050505",
+    "theme-color": "#8b5cf6",
+    "msapplication-TileColor": "#8b5cf6",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050505" },
-    { media: "(prefers-color-scheme: light)", color: "#050505" },
+    { media: "(prefers-color-scheme: dark)", color: "#8b5cf6" },
+    { media: "(prefers-color-scheme: light)", color: "#8b5cf6" },
   ],
   colorScheme: "dark",
   width: "device-width",

@@ -1,20 +1,38 @@
 import { getAccessToken } from "./auth";
+import { SITE_URL } from "@/lib/seo";
 
-const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,180}\.[A-Za-z0-9]{1,16}$/;
+/** Allow spaces and common safe filename characters */
+const NAME_RE =
+  /^[A-Za-z0-9][A-Za-z0-9 ._\-()]{0,200}\.[A-Za-z0-9]{1,16}$/;
+
 const DRIVE_API = "https://www.googleapis.com/drive/v3";
 const DRIVE_UPLOAD = "https://www.googleapis.com/upload/drive/v3";
 
-export function isValidCdnKey(key: string) {
-  if (!key || key.includes("/") || key.includes("..")) return false;
-  return NAME_RE.test(key);
+export const CDN_BRAND = "Fastering CDN";
+export const CDN_THEME_COLOR = "#8b5cf6";
+
+export function normalizeCdnKey(key: string) {
+  try {
+    return decodeURIComponent(key).trim();
+  } catch {
+    return key.trim();
+  }
 }
 
+export function isValidCdnKey(key: string) {
+  const k = normalizeCdnKey(key);
+  if (!k || k.includes("/") || k.includes("..") || k.includes("\\")) return false;
+  return NAME_RE.test(k);
+}
+
+/** Keep spaces; strip only unsafe path characters */
 export function sanitizeCdnFileName(name: string): string | null {
   const base = name.split(/[/\\]/).pop()?.trim() || "";
   const cleaned = base
-    .replace(/\s+/g, "_")
-    .replace(/[^A-Za-z0-9._-]/g, "")
-    .replace(/^\.+/, "");
+    .replace(/\s+/g, " ")
+    .replace(/[^\w .()\-]/gi, "")
+    .replace(/^\.+/, "")
+    .trim();
   if (!isValidCdnKey(cleaned)) return null;
   return cleaned;
 }
@@ -24,6 +42,19 @@ export function randomCdnName(ext: string) {
     ext.replace(/^\./, "").replace(/[^A-Za-z0-9]/g, "").slice(0, 12) || "bin";
   const id = crypto.randomUUID().replace(/-/g, "").slice(0, 12);
   return `${id}.${e}`;
+}
+
+/** Path segment encoding (spaces → %20, preserve readable structure) */
+export function encodeCdnPathSegment(name: string) {
+  return encodeURIComponent(normalizeCdnKey(name));
+}
+
+export function cdnEmbedUrl(name: string, base = SITE_URL) {
+  return `${base.replace(/\/$/, "")}/${encodeCdnPathSegment(name)}`;
+}
+
+export function cdnRawUrl(name: string, base = SITE_URL) {
+  return `${base.replace(/\/$/, "")}/r/${encodeCdnPathSegment(name)}`;
 }
 
 export type DriveFileMeta = {
@@ -37,6 +68,30 @@ export type DriveFileMeta = {
   webViewLink?: string;
   thumbnailLink?: string;
 };
+
+export type MediaKind = "image" | "video" | "audio" | "pdf" | "text" | "file";
+
+export function getMediaKind(name: string, mime?: string): MediaKind {
+  const m = (mime || "").toLowerCase();
+  const ext = name.split(".").pop()?.toLowerCase() || "";
+
+  if (m.startsWith("image/") || /^(png|jpe?g|gif|webp|avif|svg|ico|bmp|heic)$/.test(ext))
+    return "image";
+  if (
+    m.startsWith("video/") ||
+    /^(mp4|webm|mkv|mov|m4v|avi|ogv|mpeg|mpg|3gp)$/.test(ext)
+  )
+    return "video";
+  if (m.startsWith("audio/") || /^(mp3|wav|ogg|oga|m4a|flac|aac|opus)$/.test(ext))
+    return "audio";
+  if (m === "application/pdf" || ext === "pdf") return "pdf";
+  if (
+    m.startsWith("text/") ||
+    /^(txt|md|csv|json|xml|html|css|js|ts|log)$/.test(ext)
+  )
+    return "text";
+  return "file";
+}
 
 async function driveFetch(
   path: string,
@@ -55,16 +110,21 @@ async function driveFetch(
   });
 }
 
+function escapeDriveQueryValue(value: string) {
+  return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+}
+
 export async function findFileInCdnFolder(
   key: string
 ): Promise<DriveFileMeta | null> {
-  if (!isValidCdnKey(key)) return null;
+  const name = normalizeCdnKey(key);
+  if (!isValidCdnKey(name)) return null;
   const { folderId } = await getAccessToken();
 
   const q = [
     `'${folderId}' in parents`,
     "trashed = false",
-    `name = '${key.replace(/'/g, "\\'")}'`,
+    `name = '${escapeDriveQueryValue(name)}'`,
   ].join(" and ");
 
   const params = new URLSearchParams({
@@ -80,6 +140,16 @@ export async function findFileInCdnFolder(
   const res = await driveFetch(`/files?${params.toString()}`);
   if (!res.ok) {
     const body = await res.text();
+    if (
+      res.status === 403 &&
+      (body.includes("insufficient") ||
+        body.includes("Insufficient") ||
+        body.includes("ACCESS_TOKEN_SCOPE_INSUFFICIENT"))
+    ) {
+      throw new Error(
+        "Insufficient Google scopes. Disconnect Google Drive, then Connect again and allow Drive access."
+      );
+    }
     throw new Error(`Drive list failed (${res.status}): ${body.slice(0, 300)}`);
   }
 
@@ -120,7 +190,7 @@ export async function listCdnFiles(limit = 200): Promise<DriveFileMeta[]> {
           body.includes("ACCESS_TOKEN_SCOPE_INSUFFICIENT"))
       ) {
         throw new Error(
-          "Insufficient Google scopes. In Admin CDN: Disconnect Google, then Connect again and accept Google Drive access. Also add scope https://www.googleapis.com/auth/drive on the OAuth consent screen (Data access)."
+          "Insufficient Google scopes. Disconnect Google Drive, then Connect again and allow Drive access."
         );
       }
       throw new Error(
@@ -166,7 +236,7 @@ export async function uploadCdnFile(input: {
   const name = sanitizeCdnFileName(input.fileName);
   if (!name) {
     throw new Error(
-      "Invalid file name. Use something like photo.png or a8f3c1.webp"
+      "Invalid file name. Use letters, numbers, spaces, dots, dashes (e.g. my photo.png)."
     );
   }
 
@@ -177,7 +247,6 @@ export async function uploadCdnFile(input: {
     );
   }
 
-  // requireWrite: use your Google account quota (not service account)
   const { token, folderId } = await getAccessToken({ requireWrite: true });
   const metadata = {
     name,
@@ -211,7 +280,7 @@ export async function uploadCdnFile(input: {
     const text = await res.text();
     if (text.includes("storage quota") || text.includes("Service Accounts")) {
       throw new Error(
-        "Google blocked the upload: service accounts have no storage quota. Connect Google Drive with your Gmail account in Admin CDN (OAuth), then try again."
+        "Google blocked the upload: connect Google Drive with your Gmail account in Admin CDN, then try again."
       );
     }
     throw new Error(`Upload failed (${res.status}): ${text.slice(0, 400)}`);
@@ -302,12 +371,28 @@ export function guessContentType(name: string, mime?: string) {
     avif: "image/avif",
     svg: "image/svg+xml",
     ico: "image/x-icon",
+    bmp: "image/bmp",
+    heic: "image/heic",
     mp4: "video/mp4",
     webm: "video/webm",
+    mkv: "video/x-matroska",
+    mov: "video/quicktime",
+    m4v: "video/x-m4v",
+    avi: "video/x-msvideo",
+    mpeg: "video/mpeg",
+    mpg: "video/mpeg",
+    "3gp": "video/3gpp",
     mp3: "audio/mpeg",
     wav: "audio/wav",
+    ogg: "audio/ogg",
+    m4a: "audio/mp4",
+    flac: "audio/flac",
+    aac: "audio/aac",
+    opus: "audio/opus",
     pdf: "application/pdf",
     txt: "text/plain; charset=utf-8",
+    md: "text/markdown; charset=utf-8",
+    csv: "text/csv; charset=utf-8",
     json: "application/json",
     css: "text/css; charset=utf-8",
     js: "text/javascript; charset=utf-8",

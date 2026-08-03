@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Briefcase, Code, FileText, Settings, LogOut, BarChart3, HardDrive } from "lucide-react";
+import { LayoutDashboard, Briefcase, Code, Settings, LogOut, BarChart3, HardDrive } from "lucide-react";
 import { signOut } from "next-auth/react";
 import styles from "./AdminSidebar.module.css";
 
@@ -12,7 +12,6 @@ const menuItems = [
     { name: "Drive CDN", icon: HardDrive, href: "/admin/cdn" },
     { name: "Projects", icon: Briefcase, href: "/admin/projects" },
     { name: "Skills", icon: Code, href: "/admin/skills" },
-    { name: "Blogs", icon: FileText, href: "/admin/blogs" },
     { name: "Settings", icon: Settings, href: "/admin/settings" },
 ];
 

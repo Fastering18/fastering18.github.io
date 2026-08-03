@@ -5,7 +5,6 @@ import CdnManager from "@/components/admin/CdnManager";
 import { getDriveAuthStatus } from "@/lib/drive/auth";
 import { listCdnFiles } from "@/lib/drive/cdn";
 import { SITE_URL } from "@/lib/seo";
-import { getOAuthDebugInfo } from "@/lib/drive/oauth";
 import styles from "./Cdn.module.css";
 import {
   HardDrive,
@@ -20,14 +19,13 @@ export const dynamic = "force-dynamic";
 export default async function AdminCdnPage({
   searchParams,
 }: {
-  searchParams: Promise<{ oauth?: string; reason?: string; redirect_uri?: string }>;
+  searchParams: Promise<{ oauth?: string; reason?: string }>;
 }) {
   const session = await auth();
   if (!session) redirect("/admin/login");
 
   const params = await searchParams;
   const status = await getDriveAuthStatus();
-  const oauthDebug = getOAuthDebugInfo();
   let files: Awaited<ReturnType<typeof listCdnFiles>> = [];
   let listError: string | null = null;
 
@@ -41,17 +39,16 @@ export default async function AdminCdnPage({
 
   const oauthBanner =
     params.oauth === "connected"
-      ? { type: "ok" as const, text: "Google Drive connected. Uploads will use your account storage." }
+      ? {
+          type: "ok" as const,
+          text: "Google Drive connected.",
+        }
       : params.oauth === "disconnected"
-        ? { type: "ok" as const, text: "Google Drive OAuth disconnected." }
+        ? { type: "ok" as const, text: "Google Drive disconnected." }
         : params.oauth === "error"
           ? {
               type: "err" as const,
-              text: `OAuth failed: ${params.reason || "unknown error"}${
-                params.redirect_uri
-                  ? ` | app redirect_uri=${params.redirect_uri}`
-                  : ""
-              }`,
+              text: `OAuth failed: ${params.reason || "unknown error"}`,
             }
           : null;
 
@@ -61,8 +58,7 @@ export default async function AdminCdnPage({
         <div>
           <h1 className={styles.title}>Drive CDN</h1>
           <p className={styles.subtitle}>
-            Manage Google Drive assets and public short links
-            <code> /filename.ext</code>
+            Embed <code>/{`{file}`}</code> · Raw <code>/r/{`{file}`}</code>
           </p>
         </div>
       </header>
@@ -77,165 +73,68 @@ export default async function AdminCdnPage({
         </div>
       )}
 
-      <div className={styles.grid}>
-        <GlassCard className={styles.card}>
-          <h2 className={styles.cardTitle}>
-            <HardDrive size={18} /> Connection
-          </h2>
-          <ul className={styles.statusList}>
-            <li>
-              {status.oauthRefreshToken ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>
-                Google account (upload quota){" "}
-                {status.oauthEmail
-                  ? `(${status.oauthEmail})`
-                  : status.oauthRefreshToken
-                    ? "(connected)"
-                    : "(not connected)"}
-              </span>
-            </li>
-            <li>
-              {status.oauthClient ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>OAuth client ID/secret</span>
-            </li>
-            <li>
-              {status.folderIdConfigured ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>
-                Folder ID{" "}
-                {status.folderId
-                  ? `(…${status.folderId.slice(-8)})`
-                  : "(missing)"}
-              </span>
-            </li>
-            <li>
-              {status.serviceAccount ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>
-                Service account{" "}
-                {status.serviceAccountEmail
-                  ? `(read fallback: ${status.serviceAccountEmail})`
-                  : "(optional)"}
-              </span>
-            </li>
-            <li>
-              {status.canWrite ? (
-                <CheckCircle2 size={16} className={styles.ok} />
-              ) : (
-                <AlertTriangle size={16} className={styles.warn} />
-              )}
-              <span>
+      <GlassCard className={styles.card}>
+        <div className={styles.statusBar}>
+          <div className={styles.statusLeft}>
+            <HardDrive size={18} />
+            <div>
+              <p className={styles.statusTitle}>
                 {status.canWrite
-                  ? "Upload/edit/delete ready"
-                  : "Upload blocked until Google account is connected"}
-              </span>
-            </li>
-          </ul>
-
+                  ? "Ready"
+                  : status.ready
+                    ? "Read only"
+                    : "Not connected"}
+              </p>
+              <p className={styles.statusMeta}>
+                {status.oauthEmail ||
+                  (status.oauthRefreshToken
+                    ? "Google connected"
+                    : "Connect Google to upload")}
+                {status.folderId ? " · folder configured" : " · set folder ID"}
+              </p>
+            </div>
+          </div>
           <div className={styles.oauthActions}>
             {status.oauthClient && (
               <a href="/api/admin/cdn/oauth/start" className={styles.connectBtn}>
                 <Link2 size={16} />
-                {status.oauthRefreshToken
-                  ? "Reconnect Google Drive (fix scopes)"
-                  : "Connect Google Drive"}
+                {status.oauthRefreshToken ? "Reconnect" : "Connect Google"}
               </a>
             )}
             {status.oauthRefreshToken && (
               <form action="/api/admin/cdn/oauth/disconnect" method="POST">
                 <button type="submit" className={styles.disconnectBtn}>
                   <Unplug size={16} />
-                  Disconnect Google
+                  Disconnect
                 </button>
               </form>
             )}
           </div>
-          {status.oauthScopes ? (
-            <p className={styles.hint}>
-              Granted scopes: <code>{status.oauthScopes}</code>
-            </p>
-          ) : status.oauthRefreshToken ? (
-            <p className={styles.hint}>
-              Connected, but scopes not recorded. Use{" "}
-              <strong>Reconnect Google Drive</strong> once.
-            </p>
-          ) : null}
+        </div>
 
-          {status.missing.length > 0 && (
-            <div className={styles.missing}>
-              <strong>Action needed:</strong>
+        {(!status.canWrite || !status.ready) && (
+          <div className={styles.missing}>
+            {!status.oauthRefreshToken && (
+              <p>
+                Connect Google Drive with the account that owns the CDN folder
+                to enable upload, rename, and delete.
+              </p>
+            )}
+            {!status.folderIdConfigured && (
+              <p>
+                Set <code>GOOGLE_DRIVE_FOLDER_ID</code> in environment variables.
+              </p>
+            )}
+            {status.canWrite && !status.ready && status.missing.length > 0 && (
               <ul>
                 {status.missing.map((m) => (
                   <li key={m}>{m}</li>
                 ))}
               </ul>
-            </div>
-          )}
-
-          <div className={styles.explain}>
-            <strong>Why the 403 happened</strong>
-            <p>
-              Google service accounts have <em>no</em> My Drive storage quota.
-              Your 5TB lives on <code>blackerzdiscord@gmail.com</code>, not on
-              the robot account. Uploads must run as your Google user via OAuth.
-            </p>
+            )}
           </div>
-
-          {status.notes?.length ? (
-            <ul className={styles.notes}>
-              {status.notes.map((n) => (
-                <li key={n}>{n}</li>
-              ))}
-            </ul>
-          ) : null}
-        </GlassCard>
-
-        <GlassCard className={styles.card}>
-          <h2 className={styles.cardTitle}>Setup checklist</h2>
-          <ol className={styles.steps}>
-            <li>
-              In Google Cloud, open the <strong>same</strong> OAuth client as{" "}
-              <code>GOOGLE_CLIENT_ID</code> (must be type <strong>Web application</strong>).
-            </li>
-            <li>
-              Authorized redirect URIs must include <em>exactly</em>:
-              <br />
-              <code>{oauthDebug.redirectUri}</code>
-              <br />
-              (optional local) <code>http://localhost:3000/api/admin/cdn/oauth/callback</code>
-              <br />
-              No trailing slash. Wait 1–5 minutes after saving.
-            </li>
-            <li>
-              Click <strong>Connect Google Drive</strong> while using production URL{" "}
-              <code>{SITE_URL}</code> (not a random vercel.app preview unless you add that URI too).
-            </li>
-            <li>
-              Sign in as the account that owns the CDN folder (your storage quota).
-            </li>
-          </ol>
-          <p className={styles.hint}>
-            App will send redirect_uri=<code>{oauthDebug.redirectUri}</code>
-            {oauthDebug.clientIdPrefix
-              ? ` · client ${oauthDebug.clientIdPrefix}`
-              : ""}
-          </p>
-        </GlassCard>
-      </div>
+        )}
+      </GlassCard>
 
       <GlassCard className={styles.card}>
         <h2 className={styles.cardTitle}>Files</h2>

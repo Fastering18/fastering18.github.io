@@ -46,6 +46,32 @@
   margin-bottom: 14px;
 }
 
+.statusBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.statusLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+}
+
+.statusTitle {
+  font-weight: 650;
+  font-size: 1rem;
+}
+
+.statusMeta {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
 .statusList {
   list-style: none;
   margin: 0;
