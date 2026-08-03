@@ -113,6 +113,16 @@ export async function listCdnFiles(limit = 200): Promise<DriveFileMeta[]> {
     });
     if (!res.ok) {
       const body = await res.text();
+      if (
+        res.status === 403 &&
+        (body.includes("insufficient") ||
+          body.includes("Insufficient") ||
+          body.includes("ACCESS_TOKEN_SCOPE_INSUFFICIENT"))
+      ) {
+        throw new Error(
+          "Insufficient Google scopes. In Admin CDN: Disconnect Google, then Connect again and accept Google Drive access. Also add scope https://www.googleapis.com/auth/drive on the OAuth consent screen (Data access)."
+        );
+      }
       throw new Error(
         `Drive list failed (${res.status}): ${body.slice(0, 300)}`
       );

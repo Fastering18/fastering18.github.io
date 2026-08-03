@@ -147,10 +147,12 @@ export default async function AdminCdnPage({
           </ul>
 
           <div className={styles.oauthActions}>
-            {status.oauthClient && !status.oauthRefreshToken && (
+            {status.oauthClient && (
               <a href="/api/admin/cdn/oauth/start" className={styles.connectBtn}>
                 <Link2 size={16} />
-                Connect Google Drive
+                {status.oauthRefreshToken
+                  ? "Reconnect Google Drive (fix scopes)"
+                  : "Connect Google Drive"}
               </a>
             )}
             {status.oauthRefreshToken && (
@@ -162,6 +164,16 @@ export default async function AdminCdnPage({
               </form>
             )}
           </div>
+          {status.oauthScopes ? (
+            <p className={styles.hint}>
+              Granted scopes: <code>{status.oauthScopes}</code>
+            </p>
+          ) : status.oauthRefreshToken ? (
+            <p className={styles.hint}>
+              Connected, but scopes not recorded. Use{" "}
+              <strong>Reconnect Google Drive</strong> once.
+            </p>
+          ) : null}
 
           {status.missing.length > 0 && (
             <div className={styles.missing}>

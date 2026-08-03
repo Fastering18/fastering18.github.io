@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { createOAuth2Client, getOAuthRedirectUri } from "@/lib/drive/oauth";
+import {
+  createOAuth2Client,
+  getOAuthRedirectUri,
+  hasDriveScope,
+} from "@/lib/drive/oauth";
 import {
   CONFIG_OAUTH_EMAIL_KEY,
+  CONFIG_OAUTH_SCOPES_KEY,
   CONFIG_REFRESH_TOKEN_KEY,
 } from "@/lib/drive/auth";
 import { updateConfig } from "@/app/actions/config";
@@ -12,7 +17,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 function adminCdnUrl(query: string) {
-  // Always send user back to canonical admin after OAuth (not vercel.app host)
   return `${SITE_URL.replace(/\/$/, "")}/admin/cdn?${query}`;
 }
 
@@ -33,29 +37,39 @@ export async function GET(req: Request) {
   }
 
   if (!code) {
-    return NextResponse.redirect(
-      adminCdnUrl("oauth=error&reason=missing_code")
-    );
+    return NextResponse.redirect(adminCdnUrl("oauth=error&reason=missing_code"));
   }
 
   try {
-    // MUST be identical to the redirect_uri used in /oauth/start
     const redirectUri = getOAuthRedirectUri();
     const client = createOAuth2Client(redirectUri);
     const { tokens } = await client.getToken(code);
+
+    const scopeStr = tokens.scope || "";
+    if (!hasDriveScope(scopeStr)) {
+      return NextResponse.redirect(
+        adminCdnUrl(
+          "oauth=error&reason=" +
+            encodeURIComponent(
+              `missing_drive_scope (got: ${scopeStr || "none"}). Add https://www.googleapis.com/auth/drive on OAuth consent screen Data access, then Connect again and allow Drive.`
+            )
+        )
+      );
+    }
 
     if (!tokens.refresh_token) {
       return NextResponse.redirect(
         adminCdnUrl(
           "oauth=error&reason=" +
             encodeURIComponent(
-              "no_refresh_token: revoke app access at https://myaccount.google.com/permissions then Connect again with prompt=consent"
+              "no_refresh_token: open https://myaccount.google.com/permissions revoke this app, then Connect again"
             )
         )
       );
     }
 
     await updateConfig(CONFIG_REFRESH_TOKEN_KEY, tokens.refresh_token);
+    await updateConfig(CONFIG_OAUTH_SCOPES_KEY, scopeStr);
 
     try {
       client.setCredentials(tokens);
@@ -63,6 +77,10 @@ export async function GET(req: Request) {
         const tokenInfo = await client.getTokenInfo(tokens.access_token);
         if (tokenInfo.email) {
           await updateConfig(CONFIG_OAUTH_EMAIL_KEY, tokenInfo.email);
+        }
+        // Prefer scopes from tokeninfo when present
+        if (tokenInfo.scopes?.length) {
+          await updateConfig(CONFIG_OAUTH_SCOPES_KEY, tokenInfo.scopes.join(" "));
         }
       }
     } catch {

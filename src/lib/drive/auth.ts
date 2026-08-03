@@ -4,7 +4,9 @@ import { join } from "path";
 import { getConfig } from "@/app/actions/config";
 import {
   createOAuth2Client,
+  DRIVE_SCOPE,
   getOAuthClientCredentials,
+  hasDriveScope,
 } from "@/lib/drive/oauth";
 
 export type DriveAuthMode = "oauth" | "service_account" | "none";
@@ -19,6 +21,7 @@ type ServiceAccountJson = {
 
 export const CONFIG_REFRESH_TOKEN_KEY = "google_drive_refresh_token";
 export const CONFIG_OAUTH_EMAIL_KEY = "google_drive_oauth_email";
+export const CONFIG_OAUTH_SCOPES_KEY = "google_drive_oauth_scopes";
 
 /** Vercel/dotenv often stores JSON with real newlines inside private_key. */
 export function parseServiceAccountJson(raw: string): ServiceAccountJson | null {
@@ -119,36 +122,44 @@ export async function getStoredOAuthEmail(): Promise<string | null> {
   }
 }
 
-/**
- * Prefer OAuth (user account quota) for everything.
- * Service accounts have no My Drive storage quota on consumer Google accounts,
- * so uploads as the SA always 403 even when the folder is shared.
- */
+export async function getStoredOAuthScopes(): Promise<string | null> {
+  try {
+    const cfg = await getConfig();
+    return cfg[CONFIG_OAUTH_SCOPES_KEY] || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function getDriveAuthStatus() {
   const sa = loadServiceAccountFromEnv();
   const { clientId, clientSecret } = getOAuthClientCredentials();
   const hasOAuthClient = !!(clientId && clientSecret);
   const refreshToken = await getStoredRefreshToken();
   const oauthEmail = await getStoredOAuthEmail();
+  const oauthScopes = await getStoredOAuthScopes();
   const folderId = (process.env.GOOGLE_DRIVE_FOLDER_ID || "").trim();
 
+  const oauthHasDrive = !refreshToken || hasDriveScope(oauthScopes) || !oauthScopes;
+  // If scopes unknown (old connect), assume maybe ok but flag reconnect if list fails
   const hasOAuth = hasOAuthClient && !!refreshToken;
-  const canRead = hasOAuth || !!sa?.client_email;
-  const canWrite = hasOAuth; // SA cannot own storage on personal Gmail Drive
+  const oauthUsable = hasOAuth && (hasDriveScope(oauthScopes) || !oauthScopes);
+  const canWrite = hasOAuth && (hasDriveScope(oauthScopes) || !oauthScopes);
+  const canRead = oauthUsable || !!sa?.client_email;
   const ready = !!(folderId && canRead);
 
   const missing: string[] = [];
   if (!folderId) missing.push("GOOGLE_DRIVE_FOLDER_ID");
   if (!hasOAuthClient) {
-    missing.push("GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET (for upload/edit)");
+    missing.push("GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET");
   }
   if (hasOAuthClient && !refreshToken) {
-    missing.push(
-      "Connect Google account in Admin CDN (OAuth) so uploads use your Drive quota"
-    );
+    missing.push("Connect Google Drive (OAuth) for upload + your storage quota");
   }
-  if (!canRead) {
-    missing.push("OAuth connect or service account for reading files");
+  if (hasOAuth && oauthScopes && !hasDriveScope(oauthScopes)) {
+    missing.push(
+      "Reconnect Google Drive: current token lacks Drive scope (Disconnect → Connect again)"
+    );
   }
 
   return {
@@ -157,27 +168,28 @@ export async function getDriveAuthStatus() {
     oauthClient: hasOAuthClient,
     oauthRefreshToken: !!refreshToken,
     oauthEmail,
+    oauthScopes,
+    oauthHasDrive: hasOAuth ? hasDriveScope(oauthScopes) || !oauthScopes : false,
     folderIdConfigured: !!folderId,
     folderId: folderId || null,
     canRead,
-    canWrite,
+    canWrite: !!canWrite && (!oauthScopes || hasDriveScope(oauthScopes)),
     ready,
-    mode: (hasOAuth
+    mode: (oauthUsable
       ? "oauth"
       : sa?.client_email
         ? "service_account"
         : "none") as DriveAuthMode,
     missing,
     notes: [
-      "Service accounts have 0 storage on personal Google accounts. Uploads must use OAuth as your Gmail (e.g. blackerzdiscord@gmail.com).",
-      "Click Connect Google Drive below once. Redirect URI must be allowed in Google Cloud OAuth client.",
-      "Folder ID must be a folder in that same Google account.",
+      "If you see insufficient scopes: Disconnect, then Connect Google Drive again and accept Drive permission.",
+      "In Google Cloud → OAuth consent screen → Data access, add scope: https://www.googleapis.com/auth/drive",
+      "Folder must live in the same Google account you connect.",
     ],
   };
 }
 
 export async function getAccessToken(options?: {
-  /** Prefer write-capable OAuth; required for upload/rename/delete */
   requireWrite?: boolean;
 }): Promise<{
   token: string;
@@ -191,30 +203,54 @@ export async function getAccessToken(options?: {
 
   const requireWrite = options?.requireWrite === true;
   const refreshToken = await getStoredRefreshToken();
+  const oauthScopes = await getStoredOAuthScopes();
   const { clientId, clientSecret } = getOAuthClientCredentials();
 
-  // Prefer OAuth (user quota) whenever available
-  if (clientId && clientSecret && refreshToken) {
-    const oauth = new OAuth2Client(clientId, clientSecret);
-    oauth.setCredentials({ refresh_token: refreshToken });
-    const { token } = await oauth.getAccessToken();
-    if (!token) throw new Error("Failed to obtain OAuth access token");
-    return { token, folderId, mode: "oauth" };
+  const oauthScopesOk = !oauthScopes || hasDriveScope(oauthScopes);
+
+  // Prefer OAuth when token has Drive access
+  if (clientId && clientSecret && refreshToken && oauthScopesOk) {
+    const oauth = createOAuth2Client();
+    oauth.setCredentials({
+      refresh_token: refreshToken,
+      scope: oauthScopes || DRIVE_SCOPE,
+    });
+    try {
+      const { token } = await oauth.getAccessToken();
+      if (!token) throw new Error("Failed to obtain OAuth access token");
+      return { token, folderId, mode: "oauth" };
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (requireWrite || !loadServiceAccountFromEnv()) {
+        throw new Error(
+          `OAuth token refresh failed (${msg}). Disconnect Google Drive and Connect again.`
+        );
+      }
+      // fall through to SA read
+    }
   }
 
   if (requireWrite) {
+    if (refreshToken && oauthScopes && !hasDriveScope(oauthScopes)) {
+      throw new Error(
+        "OAuth token is missing Drive permission. Click Disconnect, then Connect Google Drive again and allow Google Drive access."
+      );
+    }
     throw new Error(
-      "Uploads need OAuth as your Google account (service accounts have no Drive storage quota). Open Admin CDN and click Connect Google Drive."
+      "Uploads need OAuth with Drive scope. Open Admin CDN → Connect Google Drive and accept Drive access."
     );
   }
 
-  // Read-only fallback: service account (folder must be shared with SA)
+  // Read-only fallback: service account
   const sa = loadServiceAccountFromEnv();
   if (sa?.client_email && sa?.private_key) {
     const client = new JWT({
       email: sa.client_email,
       key: sa.private_key.replace(/\\n/g, "\n"),
-      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+      scopes: [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive",
+      ],
     });
     const { token } = await client.getAccessToken();
     if (!token) throw new Error("Failed to obtain service account access token");
@@ -222,6 +258,6 @@ export async function getAccessToken(options?: {
   }
 
   throw new Error(
-    "No Google Drive credentials. Connect Google Drive in Admin CDN, or set service account for read-only."
+    "No usable Google Drive credentials. Connect Google Drive in Admin CDN."
   );
 }

@@ -5,6 +5,7 @@ import {
   DRIVE_SCOPES_PUBLIC,
   getOAuthClientCredentials,
   getOAuthRedirectUri,
+  scopesToParam,
 } from "@/lib/drive/oauth";
 
 export const runtime = "nodejs";
@@ -27,20 +28,19 @@ export async function GET(req: Request) {
     );
   }
 
-  // Fixed URI — must match Google Console Authorized redirect URIs character-for-character
   const redirectUri = getOAuthRedirectUri();
   const client = createOAuth2Client(redirectUri);
 
+  // Force re-consent so Google issues a token that includes Drive (not an old limited grant)
   const url = client.generateAuthUrl({
     access_type: "offline",
-    prompt: "consent",
-    scope: DRIVE_SCOPES_PUBLIC,
-    include_granted_scopes: true,
-    // help debug: state not required but we keep redirect stable
+    prompt: "consent select_account",
+    scope: scopesToParam(DRIVE_SCOPES_PUBLIC),
+    include_granted_scopes: false,
   });
 
-  // Optional local debug header for developers
   const res = NextResponse.redirect(url);
   res.headers.set("x-oauth-redirect-uri", redirectUri);
+  res.headers.set("x-oauth-scopes", scopesToParam(DRIVE_SCOPES_PUBLIC));
   return res;
 }
