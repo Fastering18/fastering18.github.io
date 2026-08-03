@@ -108,15 +108,15 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Muhammad Brahmana Priambudi",
-              "url": "https://fastering.thedev.id",
-              "jobTitle": "Full Stack Developer & Game Developer",
+              "url": "https://fastering.is-cool.dev",
+              "jobTitle": "Full Stack Developer & Roblox Systems Developer",
               "sameAs": [
                 "https://github.com/Fastering18",
                 "https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320",
                 "https://discord.com/users/775363892167573535",
                 "https://x.com/FasteringDev"
               ],
-              "description": "Senior Full Stack Developer specializing in high-performance web applications and game development."
+              "description": "Full stack and Roblox systems developer shipping live game economies, Knit services, and modern Next.js apps."
             })
           }}
         />

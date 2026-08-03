@@ -14,13 +14,18 @@ export default async function Projects() {
                     <span className={styles.label}>My Work</span>
                     <h2 className={styles.title}>Featured Projects</h2>
                     <p className={styles.subtitle}>
-                        A selection of projects I&apos;ve worked on, from web applications to game development.
+                        Roblox systems, live economies, and web tools—built as sole or lead developer with real players in mind.
                     </p>
                 </AnimatedSection>
 
                 <div className={styles.grid}>
                     {visibleProjects.map((project, index) => (
-                        <ProjectCard key={project.id} project={project as any} index={index} />
+                        <ProjectCard
+                            key={project.id}
+                            project={project as any}
+                            index={index}
+                            featured={index === 0}
+                        />
                     ))}
                 </div>
             </div>

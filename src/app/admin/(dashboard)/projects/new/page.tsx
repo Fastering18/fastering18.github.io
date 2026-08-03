@@ -1,7 +1,7 @@
-import { getProjectById, updateProject } from "@/app/actions/projects";
-import { notFound, redirect } from "next/navigation";
+import { addProject } from "@/app/actions/projects";
+import { redirect } from "next/navigation";
 import ProjectEditorForm from "@/components/admin/ProjectEditorForm";
-import styles from "./ProjectEdit.module.css";
+import styles from "../[id]/edit/ProjectEdit.module.css";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -12,21 +12,9 @@ function parseGallery(raw: string) {
         .filter(Boolean);
 }
 
-export default async function EditProjectPage({
-    params
-}: {
-    params: Promise<{ id: string }>
-}) {
-    const { id } = await params;
-    const project = await getProjectById(parseInt(id));
-
-    if (!project) {
-        notFound();
-    }
-
-    async function handleUpdate(formData: FormData) {
+export default function NewProjectPage() {
+    async function handleCreate(formData: FormData) {
         "use server";
-        const id = parseInt(formData.get("id") as string);
         const title = formData.get("title") as string;
         const summary = formData.get("summary") as string;
         const description = formData.get("description") as string;
@@ -38,9 +26,9 @@ export default async function EditProjectPage({
         const order = parseInt((formData.get("order") as string) || "0", 10);
 
         const linksJson = formData.get("links") as string;
-        const links = JSON.parse(linksJson);
+        const links = JSON.parse(linksJson || "[]");
 
-        await updateProject(id, {
+        await addProject({
             title,
             summary,
             description,
@@ -56,6 +44,19 @@ export default async function EditProjectPage({
         redirect("/admin/projects");
     }
 
+    const blank = {
+        title: "",
+        summary: "",
+        description: "## Challenge\n\n## What I Built\n\n- \n\n## Role\n",
+        image: "/images/projects/",
+        gallery: [],
+        tags: [],
+        links: [],
+        projectDate: new Date(),
+        isVisible: true,
+        order: 0,
+    };
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -63,10 +64,10 @@ export default async function EditProjectPage({
                     <ArrowLeft size={18} />
                     <span>Back to Projects</span>
                 </Link>
-                <h1 className={styles.title}>Edit Project: {project.title}</h1>
+                <h1 className={styles.title}>Add Project</h1>
             </header>
 
-            <ProjectEditorForm project={project} action={handleUpdate} />
+            <ProjectEditorForm project={blank} action={handleCreate} submitLabel="Create Project" />
         </div>
     );
 }

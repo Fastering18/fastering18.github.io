@@ -6,6 +6,7 @@ export const projects = pgTable("projects", {
     summary: text("summary"),
     description: text("description").notNull(),
     image: text("image").notNull(),
+    gallery: text("gallery").array().default([]),
     tags: text("tags").array().notNull(),
     links: jsonb("links").default([]), // Configurable links: { label, url, type }
     projectDate: timestamp("project_date").notNull(),

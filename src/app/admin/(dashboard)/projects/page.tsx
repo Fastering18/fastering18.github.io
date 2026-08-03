@@ -1,6 +1,5 @@
 import { getProjects, toggleProjectVisibility, deleteProject } from "@/app/actions/projects";
 import GlassCard from "@/components/GlassCard";
-import MagneticButton from "@/components/MagneticButton";
 import styles from "./Projects.module.css";
 import { Plus, Eye, EyeOff, Trash2, Edit } from "lucide-react";
 import Image from "next/image";
@@ -14,12 +13,14 @@ export default async function AdminProjectsPage() {
             <header className={styles.header}>
                 <div>
                     <h1 className={styles.title}>Manage Projects</h1>
-                    <p className={styles.subtitle}>Add, edit, or remove projects from your portfolio.</p>
+                    <p className={styles.subtitle}>
+                        {allProjects.length} projects · higher order appears first on the site.
+                    </p>
                 </div>
-                <MagneticButton variant="primary">
+                <Link href="/admin/projects/new" className={styles.addLink}>
                     <Plus size={20} />
                     <span>Add Project</span>
-                </MagneticButton>
+                </Link>
             </header>
 
             <div className={styles.grid}>
@@ -31,12 +32,20 @@ export default async function AdminProjectsPage() {
                                 alt={project.title}
                                 fill
                                 className={styles.image}
+                                sizes="300px"
                             />
+                            {!project.isVisible && (
+                                <span className={styles.hiddenBadge}>Hidden</span>
+                            )}
+                            <span className={styles.orderBadge}>#{project.order ?? 0}</span>
                         </div>
                         <div className={styles.content}>
                             <div className={styles.info}>
                                 <h3 className={styles.projectTitle}>{project.title}</h3>
-                                <p className={styles.projectYear}>{new Date(project.projectDate).getFullYear()}</p>
+                                <p className={styles.projectYear}>
+                                    {new Date(project.projectDate).getFullYear()}
+                                    {project.gallery?.length ? ` · ${project.gallery.length} gallery` : ""}
+                                </p>
                             </div>
                             <div className={styles.actions}>
                                 <Link href={`/admin/projects/${project.id}/edit`} className={styles.iconBtn} title="Edit">

@@ -9,11 +9,12 @@ import styles from "./Hero.module.css";
 export default function Hero() {
     return (
         <section id="home" className={styles.hero}>
-            <div className={styles.background}>
+            <div className={styles.background} aria-hidden>
                 <div className={styles.blob1} />
                 <div className={styles.blob2} />
                 <div className={styles.blob3} />
                 <div className={styles.grid} />
+                <div className={styles.noise} />
             </div>
 
             <div className={styles.content}>
@@ -35,29 +36,27 @@ export default function Hero() {
                 >
                     <span className={styles.line}>Hi, I&apos;m</span>
                     <span className={styles.name}>Muhammad Brahmana Priambudi</span>
-                    <span className={styles.role}>Full Stack Developer</span>
+                    <span className={styles.role}>Full Stack &amp; Roblox Systems Dev</span>
                 </motion.h1>
 
                 <AnimatedSection delay={0.4}>
-                    <p className={`${styles.description} ${styles.secondaryBio}`}>
-                        From developing complex Roblox games with thousands of players to building
-                        Discord bots serving 300+ servers, I enjoy tackling challenging problems
-                        and learning new technologies every day.
+                    <p className={styles.description}>
+                        I ship player-facing game systems and modern web apps—Knit services,
+                        live economies, and clean TypeScript stacks that hold up under real traffic.
                     </p>
                 </AnimatedSection>
 
-                <motion.p
-                    className={styles.description}
-                    initial={{ opacity: 0, y: 20 }}
+                <motion.div
+                    className={styles.pills}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
+                    transition={{ duration: 0.5, delay: 0.55 }}
                 >
-                    Building modern web applications and immersive game experiences.
-                    <br />
-                    Specializing in <span className={styles.highlight}>performance</span>,{" "}
-                    <span className={styles.highlight}>accessibility</span>, and{" "}
-                    <span className={styles.highlight}>robust system</span>.
-                </motion.p>
+                    <span className={styles.pill}>Luau / Knit</span>
+                    <span className={styles.pill}>Next.js</span>
+                    <span className={styles.pill}>Node.js</span>
+                    <span className={styles.pill}>Live Ops</span>
+                </motion.div>
 
                 <motion.div
                     className={styles.buttons}

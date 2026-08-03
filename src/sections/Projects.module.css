@@ -1,5 +1,5 @@
 .projects {
-    padding: 120px 24px;
+    padding: clamp(80px, 12vw, 120px) clamp(16px, 4vw, 24px);
     position: relative;
 }
 
@@ -8,8 +8,8 @@
     position: absolute;
     top: 20%;
     right: -20%;
-    width: 600px;
-    height: 600px;
+    width: min(600px, 80vw);
+    height: min(600px, 80vw);
     background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%);
     filter: blur(100px);
     opacity: 0.3;
@@ -24,7 +24,7 @@
 
 .header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: clamp(40px, 6vw, 60px);
 }
 
 .label {
@@ -44,22 +44,20 @@
 .subtitle {
     font-size: 1.05rem;
     color: var(--text-secondary);
-    max-width: 500px;
+    max-width: 560px;
     margin: 0 auto;
+    line-height: 1.6;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 20px;
 }
 
 @media (max-width: 768px) {
-    .projects {
-        padding: 80px 16px;
-    }
-
     .grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 }

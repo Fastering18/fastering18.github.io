@@ -6,11 +6,11 @@ import { Menu, X } from "lucide-react";
 import styles from "./Navigation.module.css";
 
 const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
-    { href: "#projects", label: "Projects" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#home", label: "Home", id: "home" },
+    { href: "/#about", label: "About", id: "about" },
+    { href: "/#skills", label: "Skills", id: "skills" },
+    { href: "/#projects", label: "Projects", id: "projects" },
+    { href: "/#contact", label: "Contact", id: "contact" },
 ];
 
 export default function Navigation() {
@@ -22,7 +22,7 @@ export default function Navigation() {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
 
-            const sections = navLinks.map((link) => link.href.slice(1));
+            const sections = navLinks.map((link) => link.id);
             for (const section of sections.reverse()) {
                 const el = document.getElementById(section);
                 if (el) {
@@ -47,7 +47,7 @@ export default function Navigation() {
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
             <div className={styles.container}>
-                <a href="#home" className={styles.logo}>
+                <a href="/#home" className={styles.logo}>
                     <span className={styles.logoText}>MBP</span>
                 </a>
 
@@ -56,10 +56,10 @@ export default function Navigation() {
                         <a
                             key={link.href}
                             href={link.href}
-                            className={`${styles.link} ${activeSection === link.href.slice(1) ? styles.active : ""}`}
+                            className={`${styles.link} ${activeSection === link.id ? styles.active : ""}`}
                         >
                             {link.label}
-                            {activeSection === link.href.slice(1) && (
+                            {activeSection === link.id && (
                                 <motion.span
                                     className={styles.activeIndicator}
                                     layoutId="activeIndicator"
@@ -94,10 +94,10 @@ export default function Navigation() {
                                 href={link.href}
                                 className={styles.mobileLink}
                                 onClick={(e) => {
-                                    e.preventDefault();
-                                    setIsOpen(false);
-                                    const element = document.querySelector(link.href);
+                                    const element = document.getElementById(link.id);
                                     if (element) {
+                                        e.preventDefault();
+                                        setIsOpen(false);
                                         const offset = 80;
                                         const bodyRect = document.body.getBoundingClientRect().top;
                                         const elementRect = element.getBoundingClientRect().top;
@@ -108,6 +108,8 @@ export default function Navigation() {
                                             top: offsetPosition,
                                             behavior: "smooth"
                                         });
+                                    } else {
+                                        setIsOpen(false);
                                     }
                                 }}
                                 initial={{ opacity: 0, x: -20 }}

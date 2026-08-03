@@ -53,26 +53,28 @@ export default function About() {
 
                     <AnimatedSection delay={0.2}>
                         <h2 className={styles.title}>
-                            Crafting Digital Experiences
+                            Systems that players feel
                             <br />
-                            <span className={styles.titleAccent}>with Code & Creativity</span>
+                            <span className={styles.titleAccent}>and teams can ship</span>
                         </h2>
                     </AnimatedSection>
 
                     <AnimatedSection delay={0.3}>
                         <p className={styles.description}>
-                            I&apos;m a passionate Full Stack Developer with expertise in building modern web
-                            applications and immersive game experiences. Proficient in{" "}
-                            <strong>Node.js</strong>, <strong>Lua</strong>, and <strong>Python</strong>,
-                            I specialize in performance optimization, accessibility, and minimalistic design.
+                            I&apos;m a full stack developer who spends most days in{" "}
+                            <strong>Luau</strong>, <strong>Node.js</strong>, and{" "}
+                            <strong>TypeScript</strong>. On Roblox I own Knit services, economies,
+                            monetization, and admin tooling. On the web I build fast Next.js apps
+                            with clear UX and durable backends.
                         </p>
                     </AnimatedSection>
 
                     <AnimatedSection delay={0.4}>
                         <p className={`${styles.description} ${styles.secondaryBio}`}>
-                            From developing complex Roblox games with thousands of players to building
-                            Discord bots serving 300+ servers, I enjoy tackling challenging problems
-                            and learning new technologies every day.
+                            Recent work spans underwater brainrot tycoons, free UGC co-op loops
+                            past 200K visits, campus digital twins, and Discord bridges that hit
+                            300+ servers. I care about retention loops, cross-platform input, and
+                            code that stays editable after launch week.
                         </p>
                     </AnimatedSection>
 
@@ -83,8 +85,8 @@ export default function About() {
                                 <span className={styles.statLabel}>Years Coding</span>
                             </div>
                             <div className={styles.stat}>
-                                <span className={styles.statNumber}>10+</span>
-                                <span className={styles.statLabel}>Projects</span>
+                                <span className={styles.statNumber}>8+</span>
+                                <span className={styles.statLabel}>Shipped Games</span>
                             </div>
                             <div className={styles.stat}>
                                 <span className={styles.statNumber}>200K+</span>

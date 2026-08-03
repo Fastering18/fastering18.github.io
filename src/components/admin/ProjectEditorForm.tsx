@@ -4,10 +4,23 @@ import { useState } from "react";
 import styles from "./ProjectEditorForm.module.css";
 import GlassCard from "@/components/GlassCard";
 import MagneticButton from "@/components/MagneticButton";
-import { Plus, Trash2, Save } from "lucide-react";
+import { Plus, Trash2, Save, Image as ImageIcon, Eye, EyeOff } from "lucide-react";
 
-export default function ProjectEditorForm({ project, action }: { project: any, action: (formData: FormData) => Promise<void> }) {
+export default function ProjectEditorForm({
+    project,
+    action,
+    submitLabel = "Save Changes",
+}: {
+    project: any;
+    action: (formData: FormData) => Promise<void>;
+    submitLabel?: string;
+}) {
     const [links, setLinks] = useState<any[]>(project.links || []);
+    const [galleryText, setGalleryText] = useState(
+        Array.isArray(project.gallery) ? project.gallery.join("\n") : ""
+    );
+    const [isVisible, setIsVisible] = useState(project.isVisible !== false);
+    const [order, setOrder] = useState(project.order ?? 0);
 
     const addLink = () => {
         setLinks([...links, { label: "", url: "", type: "external" }]);
@@ -25,46 +38,127 @@ export default function ProjectEditorForm({ project, action }: { project: any, a
 
     return (
         <form action={action} className={styles.form}>
-            <input type="hidden" name="id" value={project.id} />
+            {project.id != null && project.id !== "" && (
+                <input type="hidden" name="id" value={project.id} />
+            )}
             <input type="hidden" name="links" value={JSON.stringify(links)} />
+            <input type="hidden" name="gallery" value={galleryText} />
+            <input type="hidden" name="isVisible" value={isVisible ? "true" : "false"} />
+            <input type="hidden" name="order" value={String(order)} />
 
             <div className={styles.grid}>
                 <div className={styles.mainInfo}>
                     <GlassCard className={styles.card}>
                         <div className={styles.field}>
-                            <label>Project Title</label>
-                            <input type="text" name="title" defaultValue={project.title} required />
+                            <label htmlFor="title">Project Title</label>
+                            <input id="title" type="text" name="title" defaultValue={project.title || ""} required />
                         </div>
 
                         <div className={styles.row}>
                             <div className={styles.field}>
-                                <label>Date</label>
-                                <input type="date" name="projectDate" defaultValue={new Date(project.projectDate).toISOString().split('T')[0]} required />
+                                <label htmlFor="projectDate">Date</label>
+                                <input
+                                    id="projectDate"
+                                    type="date"
+                                    name="projectDate"
+                                    defaultValue={
+                                        project.projectDate
+                                            ? new Date(project.projectDate).toISOString().split("T")[0]
+                                            : new Date().toISOString().split("T")[0]
+                                    }
+                                    required
+                                />
                             </div>
                             <div className={styles.field}>
-                                <label>Image URL</label>
-                                <input type="text" name="image" defaultValue={project.image} required />
+                                <label htmlFor="image">Cover Image URL</label>
+                                <input
+                                    id="image"
+                                    type="text"
+                                    name="image"
+                                    defaultValue={project.image || ""}
+                                    placeholder="/images/projects/cover.png"
+                                    required
+                                />
                             </div>
                         </div>
 
                         <div className={styles.field}>
-                            <label>Tags (comma-separated)</label>
-                            <input type="text" name="tags" defaultValue={project.tags.join(", ")} required />
+                            <label htmlFor="tags">Tags (comma-separated)</label>
+                            <input
+                                id="tags"
+                                type="text"
+                                name="tags"
+                                defaultValue={Array.isArray(project.tags) ? project.tags.join(", ") : ""}
+                                required
+                            />
                         </div>
 
                         <div className={styles.field}>
-                            <label>Short Summary</label>
-                            <input type="text" name="summary" defaultValue={project.summary} required />
+                            <label htmlFor="summary">Short Summary</label>
+                            <input
+                                id="summary"
+                                type="text"
+                                name="summary"
+                                defaultValue={project.summary || ""}
+                                required
+                            />
                         </div>
 
                         <div className={styles.field}>
-                            <label>Full Description</label>
-                            <textarea name="description" defaultValue={project.description} rows={8} required />
+                            <label htmlFor="description">
+                                Full Description (supports ## headings and - bullets)
+                            </label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                defaultValue={project.description || ""}
+                                rows={14}
+                                required
+                                className={styles.tall}
+                            />
+                        </div>
+
+                        <div className={styles.field}>
+                            <label htmlFor="gallery">
+                                <ImageIcon size={14} style={{ display: "inline", marginRight: 6 }} />
+                                Gallery images (one path or URL per line)
+                            </label>
+                            <textarea
+                                id="gallery"
+                                value={galleryText}
+                                onChange={(e) => setGalleryText(e.target.value)}
+                                rows={5}
+                                placeholder={"/images/projects/shot-1.png\n/images/projects/shot-2.png"}
+                            />
+                            <p className={styles.hint}>
+                                Cover image is always included automatically on the public page.
+                            </p>
                         </div>
                     </GlassCard>
                 </div>
 
                 <div className={styles.sidebar}>
+                    <GlassCard className={styles.card}>
+                        <div className={styles.field}>
+                            <label htmlFor="order">Display Order (higher first)</label>
+                            <input
+                                id="order"
+                                type="number"
+                                value={order}
+                                onChange={(e) => setOrder(parseInt(e.target.value || "0", 10))}
+                            />
+                        </div>
+
+                        <button
+                            type="button"
+                            className={`${styles.visibilityToggle} ${isVisible ? styles.visible : styles.hidden}`}
+                            onClick={() => setIsVisible(!isVisible)}
+                        >
+                            {isVisible ? <Eye size={18} /> : <EyeOff size={18} />}
+                            <span>{isVisible ? "Visible on site" : "Hidden from site"}</span>
+                        </button>
+                    </GlassCard>
+
                     <GlassCard className={styles.card}>
                         <div className={styles.linksHeader}>
                             <h3>Button Links</h3>
@@ -115,7 +209,7 @@ export default function ProjectEditorForm({ project, action }: { project: any, a
 
                     <MagneticButton type="submit" variant="primary" className={styles.saveBtn}>
                         <Save size={20} />
-                        <span>Save Changes</span>
+                        <span>{submitLabel}</span>
                     </MagneticButton>
                 </div>
             </div>

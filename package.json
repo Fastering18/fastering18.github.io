@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:seed": "bun --env-file=.env.local run src/lib/db/seed.ts",
+    "db:check": "bun --env-file=.env.local run check_db.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",

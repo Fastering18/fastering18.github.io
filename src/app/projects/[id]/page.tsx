@@ -2,10 +2,14 @@ import { getProjectById, getProjects } from "@/app/actions/projects";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, ExternalLink, Calendar, ArrowLeft, Gamepad2 } from "lucide-react";
+import { Github, ExternalLink, Calendar, ArrowLeft, Gamepad2, Layers } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import AnimatedSection from "@/components/AnimatedSection";
+import ProjectGallery from "@/components/ProjectGallery";
+import ProjectDescription from "@/components/ProjectDescription";
+import Navigation from "@/components/Navigation";
+import Footer from "@/sections/Footer";
 import styles from "./ProjectDetails.module.css";
 import { Metadata } from "next";
 
@@ -42,92 +46,113 @@ export default async function ProjectDetails({
         notFound();
     }
 
-    const isRoblox = (project.links as any[])?.some(l => l.url.includes("roblox.com"));
+    const gallery = Array.from(
+        new Set(
+            [project.image, ...((project.gallery as string[] | null) || [])].filter(Boolean)
+        )
+    );
+
+    const formattedDate = new Date(project.projectDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+    });
 
     return (
-        <main className={styles.main}>
-            {/* Background decoration */}
-            <div className={styles.bgGlow} />
+        <>
+            <Navigation />
+            <main className={styles.main}>
+                <div className={styles.bgGlow} />
 
-            <div className={styles.container}>
-                <Link href="/#projects" className={styles.backBtn}>
-                    <ArrowLeft size={20} />
-                    <span>Back to Projects</span>
-                </Link>
+                <div className={styles.container}>
+                    <Link href="/#projects" className={styles.backBtn}>
+                        <ArrowLeft size={20} />
+                        <span>Back to Projects</span>
+                    </Link>
 
-                <div className={styles.layout}>
-                    {/* Content Section */}
-                    <div className={styles.content}>
-                        <AnimatedSection>
-                            <div className={styles.projectHeader}>
-                                <div className={styles.meta}>
-                                    <div className={styles.year}>
-                                        <Calendar size={16} />
-                                        <span>{new Date(project.projectDate).getFullYear()}</span>
+                    <div className={styles.layout}>
+                        <div className={styles.content}>
+                            <AnimatedSection>
+                                <div className={styles.projectHeader}>
+                                    <div className={styles.meta}>
+                                        <div className={styles.year}>
+                                            <Calendar size={16} />
+                                            <span>{formattedDate}</span>
+                                        </div>
+                                        <div className={styles.tags}>
+                                            {project.tags.map(tag => (
+                                                <span key={tag} className={styles.tag}>{tag}</span>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className={styles.tags}>
-                                        {project.tags.map(tag => (
-                                            <span key={tag} className={styles.tag}>{tag}</span>
-                                        ))}
+                                    <h1 className={styles.title}>{project.title}</h1>
+                                    {project.summary && (
+                                        <p className={styles.summary}>{project.summary}</p>
+                                    )}
+                                </div>
+
+                                <ProjectGallery images={gallery} title={project.title} />
+
+                                <div className={styles.info}>
+                                    <div className={styles.sectionHead}>
+                                        <Layers size={20} />
+                                        <h2 className={styles.sectionTitle}>Case Study</h2>
+                                    </div>
+                                    <ProjectDescription content={project.description} />
+
+                                    <div className={styles.actions}>
+                                        {(project.links as { label: string; url: string; type?: string }[] | null)?.map((link, idx) => {
+                                            const isRoblox = link.url.includes("roblox.com") || link.type === "roblox";
+                                            const isGithub = link.url.includes("github.com") || link.type === "github";
+
+                                            return (
+                                                <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
+                                                    <MagneticButton className={idx === 0 ? styles.primaryBtn : styles.secondaryBtn}>
+                                                        {isRoblox ? <Gamepad2 size={20} /> : isGithub ? <Github size={20} /> : <ExternalLink size={20} />}
+                                                        <span>{link.label}</span>
+                                                    </MagneticButton>
+                                                </a>
+                                            );
+                                        })}
                                     </div>
                                 </div>
-                                <h1 className={styles.title}>{project.title}</h1>
-                            </div>
+                            </AnimatedSection>
+                        </div>
 
-                            <div className={styles.imageWrapper}>
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className={styles.image}
-                                    priority
-                                />
-                            </div>
-
-                            <div className={styles.info}>
-                                <h2 className={styles.sectionTitle}>About the Project</h2>
-                                <p className={styles.description}>{project.description}</p>
-
-                                <div className={styles.actions}>
-                                    {(project.links as any[])?.map((link, idx) => {
-                                        const isRoblox = link.url.includes("roblox.com");
-                                        const isGithub = link.url.includes("github.com") || link.type === "github";
-
-                                        return (
-                                            <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
-                                                <MagneticButton className={idx === 0 ? styles.primaryBtn : styles.secondaryBtn}>
-                                                    {isRoblox ? <Gamepad2 size={20} /> : isGithub ? <Github size={20} /> : <ExternalLink size={20} />}
-                                                    <span>{link.label}</span>
-                                                </MagneticButton>
-                                            </a>
-                                        );
-                                    })}
+                        <aside className={styles.sidebar}>
+                            <GlassCard className={styles.sidebarCard}>
+                                <h3 className={styles.sidebarTitle}>Project Stack</h3>
+                                <div className={styles.sidebarTags}>
+                                    {project.tags.map(tag => (
+                                        <span key={tag} className={styles.sidebarTag}>{tag}</span>
+                                    ))}
                                 </div>
-                            </div>
-                        </AnimatedSection>
+                                <div className={styles.sidebarMeta}>
+                                    <span className={styles.sidebarMetaLabel}>Shipped</span>
+                                    <span className={styles.sidebarMetaValue}>{formattedDate}</span>
+                                </div>
+                            </GlassCard>
+
+                            <GlassCard className={styles.sidebarCard}>
+                                <h3 className={styles.sidebarTitle}>Other Projects</h3>
+                                <div className={styles.otherProjects}>
+                                    {otherProjects.map(p => (
+                                        <Link key={p.id} href={`/projects/${p.id}`} className={styles.miniCard}>
+                                            <div className={styles.miniImage}>
+                                                <Image src={p.image} alt={p.title} fill sizes="60px" />
+                                            </div>
+                                            <div className={styles.miniInfo}>
+                                                <span className={styles.miniTitle}>{p.title}</span>
+                                                <span className={styles.miniYear}>{new Date(p.projectDate).getFullYear()}</span>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </GlassCard>
+                        </aside>
                     </div>
-
-                    {/* Sidebar Section */}
-                    <aside className={styles.sidebar}>
-                        <GlassCard className={styles.sidebarCard}>
-                            <h3 className={styles.sidebarTitle}>Other Projects</h3>
-                            <div className={styles.otherProjects}>
-                                {otherProjects.map(p => (
-                                    <Link key={p.id} href={`/projects/${p.id}`} className={styles.miniCard}>
-                                        <div className={styles.miniImage}>
-                                            <Image src={p.image} alt={p.title} fill />
-                                        </div>
-                                        <div className={styles.miniInfo}>
-                                            <span className={styles.miniTitle}>{p.title}</span>
-                                            <span className={styles.miniYear}>{new Date(p.projectDate).getFullYear()}</span>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </GlassCard>
-                    </aside>
                 </div>
-            </div>
-        </main>
+            </main>
+            <Footer />
+        </>
     );
 }

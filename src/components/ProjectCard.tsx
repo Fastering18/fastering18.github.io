@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./ProjectCard.module.css";
 
 export interface Project {
@@ -12,54 +12,68 @@ export interface Project {
     summary?: string | null;
     description: string;
     image: string;
+    gallery?: string[] | null;
     tags: string[];
     projectDate: Date | string;
-    links: any;
+    links: unknown;
 }
 
 interface ProjectCardProps {
     project: Project;
     index: number;
+    featured?: boolean;
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project, index, featured = false }: ProjectCardProps) {
+    const year = new Date(project.projectDate).getFullYear();
+    const isGif = project.image.toLowerCase().endsWith(".gif");
+
     return (
-        <Link href={`/projects/${project.id}`} className={styles.cardLink}>
+        <Link
+            href={`/projects/${project.id}`}
+            className={`${styles.cardLink} ${featured ? styles.featuredLink : ""}`}
+        >
             <motion.article
-                className={styles.card}
+                className={`${styles.card} ${featured ? styles.featured : ""}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.4) }}
+                whileHover={{ y: -6 }}
             >
                 <div className={styles.imageWrapper}>
                     <Image
                         src={project.image}
                         alt={project.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes={
+                            featured
+                                ? "(max-width: 768px) 100vw, 66vw"
+                                : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        }
                         className={styles.image}
+                        unoptimized={isGif}
                     />
                     <div className={styles.imageOverlay} />
+                    <div className={styles.badgeRow}>
+                        <span className={styles.year}>{year}</span>
+                        {featured && <span className={styles.featuredBadge}>Featured</span>}
+                    </div>
                     <div className={styles.actions}>
-                        {project.links && project.links.length > 0 && (
-                            <div className={styles.actionBtn}>
-                                <ArrowUpRight size={18} />
-                            </div>
-                        )}
+                        <div className={styles.actionBtn} aria-hidden>
+                            <ArrowUpRight size={18} />
+                        </div>
                     </div>
                 </div>
 
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <span className={styles.year}>{new Date(project.projectDate).getFullYear()}</span>
+                        <h3 className={styles.title}>{project.title}</h3>
                         <ArrowUpRight size={20} className={styles.arrow} />
                     </div>
-                    <h3 className={styles.title}>{project.title}</h3>
                     <p className={styles.description}>{project.summary}</p>
                     <div className={styles.tags}>
-                        {project.tags.map((tag) => (
+                        {project.tags.slice(0, featured ? 5 : 4).map((tag) => (
                             <span key={tag} className={styles.tag}>
                                 {tag}
                             </span>

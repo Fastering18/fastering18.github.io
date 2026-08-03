@@ -15,10 +15,10 @@ export default function Footer() {
                 </div>
 
                 <nav className={styles.nav}>
-                    <a href="#home" className={styles.link}>Home</a>
-                    <a href="#about" className={styles.link}>About</a>
-                    <a href="#projects" className={styles.link}>Projects</a>
-                    <a href="#contact" className={styles.link}>Contact</a>
+                    <a href="/#home" className={styles.link}>Home</a>
+                    <a href="/#about" className={styles.link}>About</a>
+                    <a href="/#projects" className={styles.link}>Projects</a>
+                    <a href="/#contact" className={styles.link}>Contact</a>
                 </nav>
 
                 <div className={styles.bottom}>
