@@ -45,9 +45,13 @@ export default function Navigation() {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
+            aria-label="Primary"
         >
+            <a href="#main-content" className={styles.skipLink}>
+                Skip to content
+            </a>
             <div className={styles.container}>
-                <a href="/#home" className={styles.logo}>
+                <a href="/#home" className={styles.logo} aria-label="Muhammad Brahmana Priambudi home">
                     <span className={styles.logoText}>MBP</span>
                 </a>
 

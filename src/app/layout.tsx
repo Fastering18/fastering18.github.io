@@ -4,94 +4,143 @@ import { Analytics } from "@vercel/analytics/react";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
 import VisitorTracker from "@/components/VisitorTracker";
+import JsonLd from "@/components/JsonLd";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_KEYWORDS,
+  DEFAULT_TITLE,
+  SITE_HANDLE,
+  SITE_NAME,
+  SITE_URL,
+  personJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fastering.is-cool.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Muhammad Brahmana Priambudi | Full Stack Developer & Game Dev",
-    template: "%s | Muhammad Brahmana Priambudi",
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: "Senior Full Stack Developer specializing in high-performance web applications, game mechanics, and visually stunning digital experiences. Expert in Next.js, TypeScript, and Roblox Studio.",
-  alternates: {
-    canonical: "https://fastering.is-cool.dev",
-  },
-  verification: {
-    google: "CkbFuBULQLzPPzVDQCdHM4H62G5u9RP1gBh2ZxUADlQ",
-  },
-  keywords: [
-    "Muhammad Brahmana Priambudi",
-    "Fastering18",
-    "Full Stack Developer Indonesia",
-    "Game Developer Roblox",
-    "Next.js Expert",
-    "TypeScript Portfolio",
-    "UI/UX Visual Design",
-    "Software Engineer Portfolio",
-  ],
-  authors: [{ name: "Muhammad Brahmana Priambudi", url: "https://fastering.is-cool.dev" }],
-  creator: "Muhammad Brahmana Priambudi",
-  publisher: "Muhammad Brahmana Priambudi",
+  description: DEFAULT_DESCRIPTION,
+  applicationName: `${SITE_NAME} Portfolio`,
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
+  keywords: DEFAULT_KEYWORDS,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "technology",
+  classification: "Portfolio",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": [{ url: "/feed", title: `${SITE_NAME} Projects Feed` }],
+    },
+  },
+  verification: {
+    google: "CkbFuBULQLzPPzVDQCdHM4H62G5u9RP1gBh2ZxUADlQ",
+  },
   openGraph: {
-    title: "Muhammad Brahmana Priambudi | Dev",
-    description: "Building the next generation of digital experiences through clean code and immersive design.",
-    url: "https://fastering.is-cool.dev",
-    siteName: "Muhammad Brahmana Priambudi Portfolio",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    siteName: `${SITE_NAME} Portfolio`,
+    locale: "en_US",
+    type: "website",
     images: [
       {
-        url: "/images/og-image.png", // We'll need to generate/place this
+        url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Muhammad Brahmana Priambudi Portfolio Preview",
+        alt: `${SITE_NAME} portfolio preview`,
+        type: "image/png",
       },
     ],
-    type: "website",
-    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Brahmana Priambudi | @FasteringDev",
-    description: "Full Stack Developer specializing in modern web and game technologies.",
-    creator: "@FasteringDev",
-    images: ["/images/og-image.png"],
+    title: `${SITE_NAME} | ${SITE_HANDLE}`,
+    description: DEFAULT_DESCRIPTION,
+    creator: SITE_HANDLE,
+    site: SITE_HANDLE,
+    images: [
+      {
+        url: "/images/og-image.png",
+        alt: `${SITE_NAME} portfolio preview`,
+      },
+    ],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   icons: {
-    icon: "/favicon.ico?v=2",
-    shortcut: "/favicon-16x16.png?v=2",
-    apple: "/apple-touch-icon.png?v=2",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/android-chrome-512x512.png",
+      },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "MBP Portfolio",
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    "msapplication-TileColor": "#050505",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#050505" },
+    { media: "(prefers-color-scheme: light)", color: "#050505" },
+  ],
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -102,32 +151,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Muhammad Brahmana Priambudi",
-              "url": "https://fastering.is-cool.dev",
-              "jobTitle": "Full Stack Developer & Roblox Systems Developer",
-              "sameAs": [
-                "https://github.com/Fastering18",
-                "https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320",
-                "https://discord.com/users/775363892167573535",
-                "https://x.com/FasteringDev"
-              ],
-              "description": "Full stack and Roblox systems developer shipping live game economies, Knit services, and modern Next.js apps."
-            })
-          }}
-        />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} Projects`} href="/feed" />
+        <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
       </head>
       <body>
         <CustomCursor />
         <VisitorTracker />
-        <PageTransition>
-          {children}
-        </PageTransition>
+        <PageTransition>{children}</PageTransition>
         <Analytics />
       </body>
     </html>

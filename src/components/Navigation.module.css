@@ -13,6 +13,26 @@
         padding 0.25s ease;
 }
 
+.skipLink {
+    position: absolute;
+    left: 16px;
+    top: -100px;
+    z-index: 1100;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--accent-purple);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: top 0.2s ease;
+}
+
+.skipLink:focus {
+    top: 12px;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
 .scrolled {
     padding: 12px 24px;
     background: rgba(5, 5, 5, 0.78);

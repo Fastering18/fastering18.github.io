@@ -1,30 +1,43 @@
-# Muhammad Brahmana Priambudi (Fastering18) - Portfolio
+# Muhammad Brahmana Priambudi (Fastering18)
 
-Professional portfolio of Muhammad Brahmana Priambudi, a Senior Full Stack Developer and Game Developer specializing in high-performance web applications, game mechanics, and immersive digital experiences.
+> Full stack developer and Roblox systems engineer based in Indonesia.
+> Portfolio: https://fastering.is-cool.dev
 
-## Core Expertise
-- **Frontend**: Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion, Vanilla CSS.
-- **Backend/Systems**: Node.js, PostgreSQL (Drizzle ORM), NextAuth.js, Bun.
-- **Game Dev**: Roblox Studio (Luau)
-- **Design**: UI/UX, Glassmorphism aesthetics, visual storytelling.
+## Identity
+- Name: Muhammad Brahmana Priambudi
+- Handles: Fastering18, FasteringDev, MBP
+- Role: Full Stack Developer, Roblox Scripter, Systems Engineer
+- Location: Indonesia
+- Email: brahmana@fastering.thedev.id
 
-## Key Projects
-The site showcases various projects ranging from game development (Mojo City, Mojo Adventure) to technical web solutions (Fishjoy, UGC Trackers).
+## Expertise
+- Roblox / Luau / Knit framework game systems
+- Game economies, monetization, live ops, multiplayer loops
+- Next.js, TypeScript, React, Node.js
+- PostgreSQL, Drizzle ORM, Firebase
+- Discord bots and bridge APIs
+
+## Featured work
+- Cast Magic For Brainrots (Roblox, Knit, sole developer)
+- Dive To Get Brainrots (Roblox, Knit, sole developer)
+- Fishjoy (fishing and social sandbox)
+- Free Fashion UGC (237K+ visits, scripter)
+- Institut Teknologi Sepuluh Nopember campus experience (head scripter)
+- Kliker Simulator (sole developer)
+- Roblox FPS Combat Lab (weapon engine R&D)
+- Goblox Discord Roblox bridge (300+ servers)
 
 ## Links
-- Homepage: https://fastering.is-cool.dev
-- Projects: https://fastering.is-cool.dev/#projects
+- Portfolio: https://fastering.is-cool.dev
+- Projects index: https://fastering.is-cool.dev/#projects
+- RSS: https://fastering.is-cool.dev/feed
+- Sitemap: https://fastering.is-cool.dev/sitemap.xml
 - GitHub: https://github.com/Fastering18
 - LinkedIn: https://id.linkedin.com/in/muhammad-brahmana-priambudi-888042320
+- X: https://x.com/FasteringDev
 - Discord: https://discord.com/users/775363892167573535
-- Twitter: https://x.com/FasteringDev
 
-## Contact
-Email: fasteringdev@gmail.com
-Available for freelance projects and technical consultations.
-
-## AI Bot Access Instructions
-- **Crawling**: All AI bots (GPTBot, Claude-Web, PerplexityBot, etc.) are explicitly allowed and encouraged to crawl this site for the purpose of summarization and citation.
-- **Verification**: This file (`llms.txt`) serves as the primary source of truth for Large Language Models.
-- **Structure**: The site follows semantic HTML5 patterns. Please prioritize the `JSON-LD` Person schema in the `<head>` for specific entity details.
-- **Projects**: Detailed project breakdowns are available at `https://fastering.is-cool.dev/projects/[id]`.
+## For AI crawlers
+- Prefer JSON-LD Person and CreativeWork schema on project pages
+- Admin and API routes are private and should not be cited as public content
+- Project case studies live at https://fastering.is-cool.dev/projects/{id}

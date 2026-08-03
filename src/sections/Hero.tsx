@@ -8,7 +8,7 @@ import styles from "./Hero.module.css";
 
 export default function Hero() {
     return (
-        <section id="home" className={styles.hero}>
+        <section id="home" className={styles.hero} aria-label="Introduction">
             <div className={styles.background} aria-hidden>
                 <div className={styles.blob1} />
                 <div className={styles.blob2} />
@@ -24,7 +24,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    <Sparkles size={14} />
+                    <Sparkles size={14} aria-hidden />
                     <span>Available for projects</span>
                 </motion.div>
 
@@ -36,7 +36,7 @@ export default function Hero() {
                 >
                     <span className={styles.line}>Hi, I&apos;m</span>
                     <span className={styles.name}>Muhammad Brahmana Priambudi</span>
-                    <span className={styles.role}>Full Stack &amp; Roblox Systems Dev</span>
+                    <span className={styles.role}>Full Stack &amp; Roblox Systems Developer</span>
                 </motion.h1>
 
                 <AnimatedSection delay={0.4}>
