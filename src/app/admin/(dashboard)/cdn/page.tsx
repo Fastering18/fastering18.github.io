@@ -5,6 +5,7 @@ import CdnManager from "@/components/admin/CdnManager";
 import { getDriveAuthStatus } from "@/lib/drive/auth";
 import { listCdnFiles } from "@/lib/drive/cdn";
 import { SITE_URL } from "@/lib/seo";
+import { getOAuthDebugInfo } from "@/lib/drive/oauth";
 import styles from "./Cdn.module.css";
 import {
   HardDrive,
@@ -19,13 +20,14 @@ export const dynamic = "force-dynamic";
 export default async function AdminCdnPage({
   searchParams,
 }: {
-  searchParams: Promise<{ oauth?: string; reason?: string }>;
+  searchParams: Promise<{ oauth?: string; reason?: string; redirect_uri?: string }>;
 }) {
   const session = await auth();
   if (!session) redirect("/admin/login");
 
   const params = await searchParams;
   const status = await getDriveAuthStatus();
+  const oauthDebug = getOAuthDebugInfo();
   let files: Awaited<ReturnType<typeof listCdnFiles>> = [];
   let listError: string | null = null;
 
@@ -45,7 +47,11 @@ export default async function AdminCdnPage({
         : params.oauth === "error"
           ? {
               type: "err" as const,
-              text: `OAuth failed: ${params.reason || "unknown error"}`,
+              text: `OAuth failed: ${params.reason || "unknown error"}${
+                params.redirect_uri
+                  ? ` | app redirect_uri=${params.redirect_uri}`
+                  : ""
+              }`,
             }
           : null;
 
@@ -190,25 +196,32 @@ export default async function AdminCdnPage({
           <h2 className={styles.cardTitle}>Setup checklist</h2>
           <ol className={styles.steps}>
             <li>
-              In Google Cloud OAuth client, add redirect URI:
-              <br />
-              <code>
-                {SITE_URL}/api/admin/cdn/oauth/callback
-              </code>
-              <br />
-              and local:
-              <br />
-              <code>http://localhost:3000/api/admin/cdn/oauth/callback</code>
+              In Google Cloud, open the <strong>same</strong> OAuth client as{" "}
+              <code>GOOGLE_CLIENT_ID</code> (must be type <strong>Web application</strong>).
             </li>
             <li>
-              Click <strong>Connect Google Drive</strong> and sign in as the
-              account that owns the folder (and the 5TB quota).
+              Authorized redirect URIs must include <em>exactly</em>:
+              <br />
+              <code>{oauthDebug.redirectUri}</code>
+              <br />
+              (optional local) <code>http://localhost:3000/api/admin/cdn/oauth/callback</code>
+              <br />
+              No trailing slash. Wait 1–5 minutes after saving.
             </li>
             <li>
-              Folder ID env must point to a folder in that same account.
+              Click <strong>Connect Google Drive</strong> while using production URL{" "}
+              <code>{SITE_URL}</code> (not a random vercel.app preview unless you add that URI too).
             </li>
-            <li>Upload files below; use Copy URL for short links.</li>
+            <li>
+              Sign in as the account that owns the CDN folder (your storage quota).
+            </li>
           </ol>
+          <p className={styles.hint}>
+            App will send redirect_uri=<code>{oauthDebug.redirectUri}</code>
+            {oauthDebug.clientIdPrefix
+              ? ` · client ${oauthDebug.clientIdPrefix}`
+              : ""}
+          </p>
         </GlassCard>
       </div>
 

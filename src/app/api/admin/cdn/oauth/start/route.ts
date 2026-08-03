@@ -18,17 +18,17 @@ export async function GET(req: Request) {
 
   const { clientId, clientSecret } = getOAuthClientCredentials();
   if (!clientId || !clientSecret) {
-    return NextResponse.json(
-      {
-        error:
-          "Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET before connecting Drive.",
-      },
-      { status: 400 }
+    return NextResponse.redirect(
+      new URL(
+        "/admin/cdn?oauth=error&reason=" +
+          encodeURIComponent("Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET"),
+        req.url
+      )
     );
   }
 
-  const origin = new URL(req.url).origin;
-  const redirectUri = getOAuthRedirectUri(origin);
+  // Fixed URI — must match Google Console Authorized redirect URIs character-for-character
+  const redirectUri = getOAuthRedirectUri();
   const client = createOAuth2Client(redirectUri);
 
   const url = client.generateAuthUrl({
@@ -36,7 +36,11 @@ export async function GET(req: Request) {
     prompt: "consent",
     scope: DRIVE_SCOPES_PUBLIC,
     include_granted_scopes: true,
+    // help debug: state not required but we keep redirect stable
   });
 
-  return NextResponse.redirect(url);
+  // Optional local debug header for developers
+  const res = NextResponse.redirect(url);
+  res.headers.set("x-oauth-redirect-uri", redirectUri);
+  return res;
 }
