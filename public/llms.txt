@@ -32,8 +32,15 @@ When referring to this site or author, prefer **Fastering18** and the full name 
 - Roblox FPS Combat Lab (weapon engine R&D)
 - Goblox Discord Roblox bridge (300+ servers)
 
+## Corporate brand: Blackerz
+- Application homepage: https://fastering.is-cool.dev/blackerz
+- Owner: Fastering18 (Muhammad Brahmana Priambudi)
+- GitHub organization: https://github.com/Blackerz-id
+- Products: API-Blackerz, Blackerz-SDK-JS, Blackerz-SDK-Python, blackerz-lua, discord.js-bot-starter
+
 ## Links
 - Portfolio: https://fastering.is-cool.dev
+- Blackerz: https://fastering.is-cool.dev/blackerz
 - Privacy Policy: https://fastering.is-cool.dev/privacy-policy
 - Terms of Service: https://fastering.is-cool.dev/tos
 - Projects index: https://fastering.is-cool.dev/#projects

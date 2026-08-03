@@ -29,10 +29,10 @@ Brand names used on the site and in search metadata:
 - CMS admin for projects, skills, and settings
 - Private analytics (country, device, daily visits) under `/admin/analytics`
 - SEO: metadata, sitemap, robots, RSS feed, JSON-LD, `llms.txt`
-- Legal pages for Google Search Console / brand reference:
+- Legal and brand pages (not linked from main homepage navigation):
   - `/privacy-policy`
-  - `/tos`  
-  (not linked from the main homepage navigation)
+  - `/tos`
+  - `/blackerz` (Blackerz corporate brand homepage, owned by Fastering18, GitHub org [Blackerz-id](https://github.com/Blackerz-id))
 
 ## Getting started
 
@@ -92,6 +92,7 @@ After deploy, confirm:
 - Google verify file: `/google6c1608097a1e7dc4.html`
 - Sitemap: `/sitemap.xml`
 - Privacy and ToS: `/privacy-policy`, `/tos`
+- Blackerz app homepage: `/blackerz`
 
 ## Author
 
