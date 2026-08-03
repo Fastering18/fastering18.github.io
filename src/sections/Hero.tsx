@@ -41,7 +41,7 @@ export default function Hero() {
 
                 <AnimatedSection delay={0.4}>
                     <p className={styles.description}>
-                        I ship player-facing game systems and modern web apps: Knit services,
+                        I ship player facing game systems and modern web apps with Knit services,
                         live economies, and clean TypeScript stacks that hold up under real traffic.
                     </p>
                 </AnimatedSection>

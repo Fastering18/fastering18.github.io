@@ -33,13 +33,13 @@ export default async function AdminDashboard() {
         },
         {
             name: "Total views",
-            value: analytics ? analytics.totalViews.toLocaleString() : "-",
+            value: analytics ? analytics.totalViews.toLocaleString() : "n/a",
             icon: Eye,
             color: "#10b981",
         },
         {
             name: "Unique visitors",
-            value: analytics ? analytics.uniqueVisitors.toLocaleString() : "-",
+            value: analytics ? analytics.uniqueVisitors.toLocaleString() : "n/a",
             icon: Users,
             color: "#f59e0b",
         },

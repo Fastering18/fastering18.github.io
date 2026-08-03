@@ -154,12 +154,12 @@ export default async function AnalyticsPage() {
                             )}
                             {data.recent.map((r) => (
                                 <tr key={r.id}>
-                                    <td>{r.createdAt ? new Date(r.createdAt).toISOString().replace("T", " ").slice(0, 19) : "-"}</td>
+                                    <td>{r.createdAt ? new Date(r.createdAt).toISOString().replace("T", " ").slice(0, 19) : "n/a"}</td>
                                     <td className={styles.mono}>{r.path}</td>
-                                    <td>{r.country || "-"}</td>
-                                    <td>{r.city || "-"}</td>
-                                    <td>{r.device || "-"}</td>
-                                    <td>{r.browser || "-"}</td>
+                                    <td>{r.country || "n/a"}</td>
+                                    <td>{r.city || "n/a"}</td>
+                                    <td>{r.device || "n/a"}</td>
+                                    <td>{r.browser || "n/a"}</td>
                                 </tr>
                             ))}
                         </tbody>

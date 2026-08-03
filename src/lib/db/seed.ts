@@ -33,12 +33,12 @@ async function seed() {
     {
       title: "Dive To Get Brainrots",
       summary:
-        "Underwater survival tycoon: dive deeper for rarer brainrots while oxygen, weather, and offline income keep the loop alive.",
+        "Underwater survival tycoon where you dive deeper for rarer brainrots while oxygen, weather, and offline income keep the loop alive.",
       description: `## Challenge
-Brainrot collectors want a fresh loop that still feels familiar: go out, risk something real, bring back generators that print cash. Most entries copy the same land map. Dive To Get Brainrots flips the fantasy underwater: depth becomes both reward and danger.
+Brainrot collectors want a fresh loop that still feels familiar. Go out, risk something real, bring back generators that print cash. Most entries copy the same land map. Dive To Get Brainrots flips the fantasy underwater so depth becomes both reward and danger.
 
 ## What I Built
-As sole developer, I scripted the full experience from scratch on the Knit framework (Services + Controllers) so systems could ship and iterate in days instead of weeks. Players manage oxygen while swimming farther and deeper for stronger brainrot generators, then park those units to earn even while offline.
+As sole developer, I scripted the full experience from scratch on the Knit framework (Services and Controllers) so systems could ship and iterate in days instead of weeks. Players manage oxygen while swimming farther and deeper for stronger brainrot generators, then park those units to earn even while offline.
 
 Core systems:
 - Oxygen risk loop tied to dive distance and depth
@@ -47,13 +47,13 @@ Core systems:
 - Rotating weathers and server events on an auto cycle
 - Full monetization stack (gamepasses, products, premium hooks)
 - Admin tools for live ops, grants, and event control
-- Asset integration for existing 2D/3D packs without blocking gameplay polish
+- Asset integration for existing 2D and 3D packs without blocking gameplay polish
 
 ## Architecture
 Knit keeps server Services (economy, inventory, weather, monetization) cleanly separated from client Controllers (oxygen HUD, dive feedback, shop UX). That split made hotfixes and feature adds cheap during early launch traffic.
 
 ## Role
-Sole developer: gameplay scripting, systems design, monetization, and admin tooling. Leveraged existing 2D & 3D assets so code and game-feel could stay the focus.`,
+Sole developer covering gameplay scripting, systems design, monetization, and admin tooling. Leveraged existing 2D and 3D assets so code and game feel could stay the focus.`,
       image: "/images/projects/dive-brainrots-thumb.jpg",
       gallery: [
         "/images/projects/dive-brainrots-thumb.jpg",
@@ -74,27 +74,27 @@ Sole developer: gameplay scripting, systems design, monetization, and admin tool
     {
       title: "Cast Magic For Brainrots",
       summary:
-        "Wizard-themed brainrot tycoon shipped in under a week: aura grind, gate breaks, rebirths, and reusable live-ops systems.",
+        "Wizard themed brainrot tycoon shipped in under a week with aura grind, gate breaks, rebirths, and reusable live ops systems.",
       description: `## Challenge
-A week after Dive To Get Brainrots, the goal was a fresh theme with the same retention DNA, without rewriting every system from zero. Players needed a clear fantasy: train aura, smash gates, collect brainrots, climb the wizard ladder.
+A week after Dive To Get Brainrots, the goal was a fresh theme with the same retention DNA, without rewriting every system from zero. Players needed a clear fantasy. Train aura, smash gates, collect brainrots, climb the wizard ladder.
 
 ## What I Built
-Sole developer again. Full script pass on Knit, reusing battle-tested patterns for weather, rebirth, monetization, and admin so the new theme could launch fast.
+Sole developer again. Full script pass on Knit, reusing battle tested patterns for weather, rebirth, monetization, and admin so the new theme could launch fast.
 
 Core systems:
-- AFK aura grind as the magic-power engine
+- AFK aura grind as the magic power engine
 - Gate destruction progression that opens new zones
 - Aura shop tiers that meaningfully change pace
-- Rebirth loop for long-horizon scaling
-- Rotating weathers/events shared with the studio toolkit
-- Monetization + admin panels reused and tightened for ops speed
+- Rebirth loop for long horizon scaling
+- Rotating weathers and events shared with the studio toolkit
+- Monetization and admin panels reused and tightened for ops speed
 - Client Controllers for cast feedback, gate hits, and inventory UX
 
 ## Impact
-Finished in less than a week by treating services as product building blocks instead of one-off scripts. New theme, familiar depth, without a multi-month rewrite.
+Finished in less than a week by treating services as product building blocks instead of one off scripts. New theme, familiar depth, without a multi month rewrite.
 
 ## Role
-Sole developer: systems architecture, Knit services/controllers, economy tuning, and launch tooling. 2D/3D assets reused where they fit the magic fantasy.`,
+Sole developer for systems architecture, Knit services and controllers, economy tuning, and launch tooling. 2D and 3D assets reused where they fit the magic fantasy.`,
       image: "/images/projects/cast-magic-thumbnail.png",
       gallery: [
         "/images/projects/cast-magic-thumbnail.png",
@@ -116,25 +116,25 @@ Sole developer: systems architecture, Knit services/controllers, economy tuning,
     {
       title: "Fishjoy",
       summary:
-        "Fishing + social sandbox with rods, baits, islands, and community-first beta tooling for a living hangout loop.",
+        "Fishing and social sandbox with rods, baits, islands, and community first beta tooling for a living hangout loop.",
       description: `## Challenge
-Fishing games on Roblox often stop at "cast and wait." Fishjoy aims higher: a social hangout where fishing is satisfying, customization is deep, and the map rewards exploration.
+Fishing games on Roblox often stop at cast and wait. Fishjoy aims higher. It is a social hangout where fishing is satisfying, customization is deep, and the map rewards exploration.
 
 ## What I Built
-Gameplay and systems work for a beta experience focused on feel first: cast timing, catch feedback, and progression that unlocks rods, baits, and islands without burying players in menus.
+Gameplay and systems work for a beta experience focused on feel first. Cast timing, catch feedback, and progression unlock rods, baits, and islands without burying players in menus.
 
 Highlights:
-- Satisfying cast/reel feedback loop
+- Satisfying cast and reel feedback loop
 - Progression across rods, baits, and collectible gear
-- Multi-island discovery for long-session exploration
-- Social-first structure so fishing doubles as a hangout
+- Multi island discovery for long session exploration
+- Social first structure so fishing doubles as a hangout
 - Beta reporting path tied to community channels
 
 ## Status
-Public beta. Bugs go to community socials; the loop keeps expanding as islands and economy pieces land.
+Public beta. Bugs go to community socials. The loop keeps expanding as islands and economy pieces land.
 
 ## Role
-Gameplay and systems development for Fashou Studio's fishing + social experience.`,
+Gameplay and systems development for Fashou Studio fishing and social experience.`,
       image: "/images/projects/fishjoy-thumb.jpg",
       gallery: [
         "/images/projects/fishjoy-thumb.jpg",
@@ -155,27 +155,27 @@ Gameplay and systems development for Fashou Studio's fishing + social experience
     {
       title: "Free Fashion UGC",
       summary:
-        "Co-op luck ball economy that funds free limited UGC drops (237K+ visits), weekly item cadence, full scripter ownership.",
+        "Co-op luck ball economy that funds free limited UGC drops, with 237K+ visits, weekly item cadence, and full scripter ownership.",
       description: `## Challenge
-Free limited UGC needs a fair, readable economy: players should understand luck, risk, and reward before they break the glass ball. Fail states must feel honest, not random punishment.
+Free limited UGC needs a fair, readable economy. Players should understand luck, risk, and reward before they break the glass ball. Fail states must feel honest, not random punishment.
 
 ## What I Built
-As scripter (@Fastering18), I owned gameplay logic end-to-end. Players pass a glass ball to build luck, then break it for coins spent on limited UGC. New items land every 1-2 weeks.
+As scripter (@Fastering18), I owned gameplay logic end to end. Players pass a glass ball to build luck, then break it for coins spent on limited UGC. New items land every 1 to 2 weeks.
 
 Systems:
 - Ball pass multiplayer state and ownership handoff
 - Luck accumulation with a clear break risk model
-- Fail path: low luck can yield zero coins + 300s ball cooldown
+- Fail path where low luck can yield zero coins plus a 300s ball cooldown
 - Coin shop wired to rotating limited UGC catalog
-- Codes (e.g. RELEASE), group/like gates, daily bonuses
-- Premium 2× playtime rewards
+- Codes (for example RELEASE), group and like gates, daily bonuses
+- Premium 2x playtime rewards
 - Reward surfaces and drop cadence support for live ops
 
 ## Impact
-237.1K+ visits. UI design by @kadelyin; scripting and economy behavior owned here.
+237.1K+ visits. UI design by @kadelyin. Scripting and economy behavior owned here.
 
 ## Role
-Scripter  -  multiplayer ball logic, economy, codes, rewards, and catalog hooks.`,
+Scripter for multiplayer ball logic, economy, codes, rewards, and catalog hooks.`,
       image: "/images/projects/ugc-thumb.png",
       gallery: [
         "/images/projects/ugc-thumb.png",
@@ -197,25 +197,25 @@ Scripter  -  multiplayer ball logic, economy, codes, rewards, and catalog hooks.
     {
       title: "Institut Teknologi Sepuluh Nopember",
       summary:
-        "Campus digital twin of ITS Surabaya: landmarks, social hub features, and multiplayer systems for the student community.",
+        "Campus digital twin of ITS Surabaya with landmarks, social hub features, and multiplayer systems for the student community.",
       description: `## Challenge
-Represent one of Indonesia's top technical universities inside Roblox with enough fidelity that students recognize home, and enough systems that the place works as a living campus hub, not a static diorama.
+Represent one of Indonesia's top technical universities inside Roblox with enough fidelity that students recognize home, and enough systems that the place works as a living campus hub rather than a static diorama.
 
 ## What I Built
-Head scripter for interactive campus systems on top of high-detail environment work (including the Rectorate landmark). Focus: features that make the map usable as a social and exploratory space.
+Head scripter for interactive campus systems on top of high detail environment work (including the Rectorate landmark). Focused on features that make the map usable as a social and exploratory space.
 
 Feature work includes:
 - Animation systems for campus life moments
 - Teleport network across campus zones
 - Fishing and leisure activities for hangout sessions
 - Leaderboards and competitive social hooks
-- Multiplayer-friendly performance tuning for dense architecture
+- Multiplayer friendly performance tuning for dense architecture
 
 ## Context
 Institut Teknologi Sepuluh Nopember (ITS) sits in Surabaya, East Java. The experience doubles as community ground for ITS Roblox players and alumni curiosity traffic.
 
 ## Role
-Head scripter  -  animation, teleport, fishing, leaderboards, and related campus feature development.`,
+Head scripter for animation, teleport, fishing, leaderboards, and related campus feature development.`,
       image: "/images/projects/its_rektorat.png",
       gallery: [
         "/images/projects/its_rektorat.png",
@@ -236,26 +236,26 @@ Head scripter  -  animation, teleport, fishing, leaderboards, and related campus
     {
       title: "Kliker Simulator",
       summary:
-        "Pet-and-click progression sim: hatch, mutate, rank up, and island hop with UI built for huge number growth.",
+        "Pet and click progression sim where you hatch, mutate, rank up, and island hop with UI built for huge number growth.",
       description: `## Challenge
-Clicker sims die when numbers explode and the UI stalls. Kliker Simulator needed Pet Simulator-class loops: pets, mutations, ranks, islands, while staying readable on every click.
+Clicker sims die when numbers explode and the UI stalls. Kliker Simulator needed Pet Simulator class loops with pets, mutations, ranks, and islands, while staying readable on every click.
 
 ## What I Built
-Sole developer on a full clicker progression stack: coins from clicks, pet hatch/mutate, ranks, and island discovery, with codes and community hooks for retention.
+Sole developer on a full clicker progression stack covering coins from clicks, pet hatch and mutate, ranks, and island discovery, with codes and community hooks for retention.
 
 Systems:
-- High-frequency click income with stable client feedback
-- Pet hatch + mutate rarity ladder
-- Rank unlocks that reframe mid-game goals
-- Multi-island map progression
+- High frequency click income with stable client feedback
+- Pet hatch and mutate rarity ladder
+- Rank unlocks that reframe mid game goals
+- Multi island map progression
 - Codes pipeline and social CTA integration
 - UI panels for inventory, shop, and mutation states under heavy particle load
 
 ## Technical Notes
-Large-number handling and responsive UI were the hard parts: upgrades and VFX can fire in bursts without freezing the main path. Beta feedback loop ran through community channels.
+Large number handling and responsive UI were the hard parts. Upgrades and VFX can fire in bursts without freezing the main path. Beta feedback loop ran through community channels.
 
 ## Role
-Sole developer: gameplay, progression economy, mutation systems, and UI.`,
+Sole developer for gameplay, progression economy, mutation systems, and UI.`,
       image: "/images/projects/kliker-lobby.png",
       gallery: [
         "/images/projects/kliker-lobby.png",
@@ -279,21 +279,21 @@ Sole developer: gameplay, progression economy, mutation systems, and UI.`,
     {
       title: "Roblox FPS Combat Lab",
       summary:
-        "Custom raycast weapon sandbox for recoil, ballistics feel, and cross-platform hit feedback on PC and mobile.",
+        "Custom raycast weapon sandbox for recoil, ballistics feel, and cross platform hit feedback on PC and mobile.",
       description: `## Challenge
-"Game feel" in Roblox FPS work is easy to fake and hard to ship: recoil patterns, hit registration, and input latency have to hold up on both mouse and touch.
+Game feel in Roblox FPS work is easy to fake and hard to ship. Recoil patterns, hit registration, and input latency have to hold up on both mouse and touch.
 
 ## What I Built
-An experimental combat lab focused on weapon engine fundamentals: custom raycasting, recoil authoring, and snappy feedback. Used as a foundation for broader shooter prototypes.
+An experimental combat lab focused on weapon engine fundamentals including custom raycasting, recoil authoring, and snappy feedback. Used as a foundation for broader shooter prototypes.
 
 Systems explored:
 - Raycast weapon core with configurable spreads and recoil curves
 - Hit registration prioritising responsiveness over theatrics
-- Lobby/loadout flows for rapid weapon comparison
-- Mobile-aware control considerations alongside PC aim
+- Lobby and loadout flows for rapid weapon comparison
+- Mobile aware control considerations alongside PC aim
 
 ## Role
-Sole developer: combat mechanics R&D and weapon tooling.`,
+Sole developer for combat mechanics R&D and weapon tooling.`,
       image: "/images/projects/fpsgame.png",
       gallery: [
         "/images/projects/fpsgame.png",
@@ -316,22 +316,22 @@ Sole developer: combat mechanics R&D and weapon tooling.`,
     {
       title: "Goblox",
       summary:
-        "Discord-Roblox bridge bot and open tooling: verification, stats, and ops workflows across 300+ servers.",
+        "Discord and Roblox bridge bot with open tooling for verification, stats, and ops workflows across 300+ servers.",
       description: `## Challenge
-Roblox communities live on Discord. Moderators need verification, stats, and remote actions without tab-hopping through five dashboards.
+Roblox communities live on Discord. Moderators need verification, stats, and remote actions without hopping through five dashboards.
 
 ## What I Built
-Goblox bridges Discord and Roblox: bot features for community ops plus open-source pieces and a web dashboard for monitoring and remote triggers.
+Goblox bridges Discord and Roblox with bot features for community ops, open source pieces, and a web dashboard for monitoring and remote triggers.
 
 Highlights:
-- Account verification and Roblox-linked identity flows
-- Server-facing utility commands for community managers
-- Bridge API patterns for game - Discord data
-- Web dashboard surface for developer/ops visibility
+- Account verification and Roblox linked identity flows
+- Server facing utility commands for community managers
+- Bridge API patterns for game and Discord data
+- Web dashboard surface for developer and ops visibility
 - Scaled to 300+ Discord servers at peak before sunset of the hosted bot era
 
 ## Role
-Sole developer: bot architecture (Discord.js / Node.js), bridge design, and dashboard work.`,
+Sole developer for bot architecture (Discord.js and Node.js), bridge design, and dashboard work.`,
       image: "/images/projects/gobloxbot.png",
       gallery: [
         "/images/projects/gobloxbot.png",

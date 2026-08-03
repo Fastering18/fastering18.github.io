@@ -6,7 +6,7 @@ export const projects: Project[] = [
     id: 1,
     title: "Dive To Get Brainrots",
     summary:
-      "Underwater survival tycoon: dive deeper for rarer brainrots while oxygen, weather, and offline income keep the loop alive.",
+      "Underwater survival tycoon where you dive deeper for rarer brainrots while oxygen, weather, and offline income keep the loop alive.",
     description:
       "Sole developer. Knit services, oxygen risk loop, brainrot economy, monetization, admin tooling.",
     image: "/images/projects/dive-brainrots-thumb.jpg",
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     id: 2,
     title: "Cast Magic For Brainrots",
     summary:
-      "Wizard-themed brainrot tycoon shipped in under a week with reusable live-ops systems.",
+      "Wizard themed brainrot tycoon shipped in under a week with reusable live ops systems.",
     description:
       "Sole developer. Aura grind, gates, rebirths, monetization on Knit.",
     image: "/images/projects/cast-magic-thumbnail.png",
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     id: 3,
     title: "Fishjoy",
     summary:
-      "Fishing + social sandbox with rods, baits, islands, and community-first beta tooling.",
+      "Fishing and social sandbox with rods, baits, islands, and community first beta tooling.",
     description: "Gameplay and systems for a social fishing experience.",
     image: "/images/projects/fishjoy-thumb.jpg",
     tags: ["Roblox", "Fishing Sim", "Social"],
@@ -59,7 +59,7 @@ export const projects: Project[] = [
     id: 4,
     title: "Free Fashion UGC",
     summary:
-      "Co-op luck ball economy funding free limited UGC  -  237K+ visits).",
+      "Co-op luck ball economy funding free limited UGC with 237K+ visits.",
     description:
       "Scripter for multiplayer ball logic, economy, codes, and rewards.",
     image: "/images/projects/ugc-thumb.png",
@@ -79,7 +79,7 @@ export const projects: Project[] = [
     summary:
       "Campus digital twin of ITS Surabaya with social multiplayer systems.",
     description:
-      "Head scripter  -  animation, teleport, fishing, leaderboards.",
+      "Head scripter for animation, teleport, fishing, and leaderboards.",
     image: "/images/projects/its_rektorat.png",
     tags: ["Roblox", "Lua", "Campus Twin"],
     projectDate: new Date("2025-07-17"),
@@ -95,8 +95,8 @@ export const projects: Project[] = [
     id: 6,
     title: "Kliker Simulator",
     summary:
-      "Pet-and-click progression sim with hatch, mutate, ranks, and islands.",
-    description: "Sole developer  -  clicker economy, pets, mutations, UI.",
+      "Pet and click progression sim with hatch, mutate, ranks, and islands.",
+    description: "Sole developer for clicker economy, pets, mutations, and UI.",
     image: "/images/projects/kliker-lobby.png",
     tags: ["Roblox", "Simulator", "Pets"],
     projectDate: new Date("2022-05-30"),
@@ -112,8 +112,8 @@ export const projects: Project[] = [
     id: 7,
     title: "Roblox FPS Combat Lab",
     summary:
-      "Custom raycast weapon sandbox for recoil and cross-platform combat feel.",
-    description: "Sole developer  -  weapon engine R&D.",
+      "Custom raycast weapon sandbox for recoil and cross platform combat feel.",
+    description: "Sole developer for weapon engine R&D.",
     image: "/images/projects/fpsgame.png",
     tags: ["Roblox", "FPS", "Combat"],
     projectDate: new Date("2022-08-05"),
@@ -128,8 +128,8 @@ export const projects: Project[] = [
   {
     id: 8,
     title: "Goblox",
-    summary: "Discord-Roblox bridge bot across 300+ servers.",
-    description: "Sole developer  -  Discord.js bridge and dashboard.",
+    summary: "Discord and Roblox bridge bot across 300+ servers.",
+    description: "Sole developer for Discord.js bridge and dashboard.",
     image: "/images/projects/gobloxbot.png",
     tags: ["Discord.js", "Node.js", "API"],
     projectDate: new Date("2020-12-01"),
