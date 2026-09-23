@@ -57,6 +57,30 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/quiz1",
+        destination: "/quiz1/index.html",
+      },
+      {
+        source: "/quiz1/profile",
+        destination: "/quiz1/profile.html",
+      },
+      {
+        source: "/quiz1/hometown",
+        destination: "/quiz1/hometown.html",
+      },
+      {
+        source: "/quiz1/food",
+        destination: "/quiz1/food.html",
+      },
+      {
+        source: "/quiz1/tourist",
+        destination: "/quiz1/tourist.html",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -33,6 +33,7 @@ const RESERVED_PREFIXES = [
   "/r/",
   "/v/",
   "/_next",
+  "/quiz1",
 ];
 
 export function middleware(req: NextRequest) {
