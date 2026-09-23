@@ -3,6 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggler = document.getElementById('navbarTogglerBtn');
   const navLinks = document.querySelectorAll('.custom-navbar .nav-link');
 
+  if (window.location.protocol === 'file:') {
+    const fileMap = {
+      '/quiz1': 'index.html',
+      '/quiz1/': 'index.html',
+      '/quiz1/profile': 'profile.html',
+      '/quiz1/hometown': 'hometown.html',
+      '/quiz1/food': 'food.html',
+      '/quiz1/tourist': 'tourist.html'
+    };
+    document.querySelectorAll('a').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href && fileMap[href]) {
+        link.setAttribute('href', fileMap[href]);
+      }
+    });
+  }
+
   if (navToggler && navCollapse) {
     navToggler.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -44,21 +61,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const currentPath = window.location.pathname.toLowerCase();
+  const currentPath = window.location.pathname.toLowerCase().replace(/\/$/, "");
   navLinks.forEach((link) => {
     const href = link.getAttribute('href');
     if (!href) return;
-    const cleanHref = href.toLowerCase();
+    const cleanHref = href.toLowerCase().replace(/\/$/, "");
 
-    const isHome = (cleanHref === 'index.html' || cleanHref === '#' || cleanHref === './' || cleanHref.endsWith('/quiz1') || cleanHref.endsWith('/quiz1/')) &&
-                   (currentPath.endsWith('index.html') || currentPath.endsWith('/quiz1') || currentPath.endsWith('/quiz1/'));
+    const isHome = (cleanHref === '/quiz1' || cleanHref === 'index.html') &&
+                   (currentPath === '/quiz1' || currentPath.endsWith('index.html') || currentPath === '');
     
-    const isMatchingPage = cleanHref.length > 1 && cleanHref !== '#' && (
-      currentPath.endsWith(cleanHref) || 
-      currentPath.includes(cleanHref.replace('.html', ''))
+    const isMatch = cleanHref !== '/quiz1' && cleanHref !== 'index.html' && (
+      currentPath === cleanHref ||
+      currentPath.endsWith(cleanHref) ||
+      (currentPath.includes('profile') && cleanHref.includes('profile')) ||
+      (currentPath.includes('hometown') && cleanHref.includes('hometown')) ||
+      (currentPath.includes('food') && cleanHref.includes('food')) ||
+      (currentPath.includes('tourist') && cleanHref.includes('tourist'))
     );
 
-    if (isHome || isMatchingPage) {
+    if (isHome || isMatch) {
       navLinks.forEach((l) => l.classList.remove('active'));
       link.classList.add('active');
     }
