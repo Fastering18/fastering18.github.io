@@ -11,6 +11,8 @@ const RESERVED_FILES = new Set([
   "robots.txt",
   "sitemap.xml",
   "manifest.webmanifest",
+  "manifest.json",
+  "sw.js",
   "site.webmanifest",
   "llms.txt",
   "icon.png",

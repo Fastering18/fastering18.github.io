@@ -84,4 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
       link.classList.add('active');
     }
   });
+
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      const swUrl = window.location.pathname.startsWith('/quiz1') ? '/quiz1/sw.js' : '/sw.js';
+      navigator.serviceWorker.register(swUrl).catch(() => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    });
+  }
 });
